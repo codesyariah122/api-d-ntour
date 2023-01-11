@@ -1,15 +1,15 @@
 <template>
     <div>
-        <Success />
+        <Activate />
     </div>
 </template>
 
 <script>
-import Success from "../../components/Auth/success.vue";
+import Activate from "../../components/Activated/activate.vue";
 
 export default {
     components: {
-        Success,
+        Activate,
     },
 };
 </script>

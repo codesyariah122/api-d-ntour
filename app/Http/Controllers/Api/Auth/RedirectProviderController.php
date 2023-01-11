@@ -163,17 +163,17 @@ class RedirectProviderController extends Controller
                     $newuser->provider_name = $provider;
                     $newuser->name = $providerUser->getName();
                     $newuser->email = $providerUser->getEmail();
-                    $newuser->g_avatar = $providerUser->getAvatar();
                     $newuser->password = Hash::make($providerUser->getName() . '@' . $providerUser->getId());
                     $newuser->roles = json_encode(['CUSTOMER']);
                     $newuser->status = 'ACTIVE';
                     $newuser->is_login = 1;
                     $newuser->expires_at = now()->addRealDays(1);
                     $newuser->last_login = $current;
-                    $newuser->activation_id =
-                        $newuser->save();
+                    $newuser->save();
                     // saving profile table
                     $profile = new Profile;
+                    $profile->username = trim(preg_replace('/\s+/', '_', strtolower($providerUser->name())));
+                    $profile->g_avatar = $providerUser->getAvatar();
                     $profile->longitude = $locator['longitude'];
                     $profile->latitude = $locator['latitude'];
                     $profile->post_code = $locator['zip'];
@@ -208,7 +208,7 @@ class RedirectProviderController extends Controller
                 $profile->post_code = $locator['zip'];
                 $profile->save();
 
-                $token = $user->createToken(env('API_AUTH_TOKEN_PASSPORT'))->accessToken;
+                $token = $user->createToken(env('apiToken'))->accessToken;
 
                 // return $this->respondWithToken($token);
                 return redirect(env('FRONTEND_APP_TEST') . '/auth/success?access_token=' . $token);

@@ -12,6 +12,6 @@
         Aktivasi  akun : {{ $details['username'] }} di sini <br>
 
         <br>
-        <a href="{{ env('FRONTEND_APP')}}/activated/user/{{$details['token']}}" class="btn btn-info btn-block">Aktivasi Member</a>
+        <a href="{{ env('FRONTEND_APP_TEST')}}/activated/{{$details['token']}}" class="btn btn-info btn-block">Aktivasi Member</a>
     </p>
 </div>

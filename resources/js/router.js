@@ -3,6 +3,7 @@ import Login from "./views/Auth/login";
 import Admin from "./views/Dashboard/_role";
 import Profile from "./views/Profile/_username";
 import Success from "./views/Auth/success";
+import Activated from "./views/Activated/index";
 
 export const routes = [
     {
@@ -29,5 +30,10 @@ export const routes = [
         name: "success",
         path: "/auth/success",
         component: Success,
+    },
+    {
+        name: "success",
+        path: "/activated/:token",
+        component: Activated,
     },
 ];

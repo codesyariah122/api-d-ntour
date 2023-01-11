@@ -20,7 +20,6 @@ class AdministratorSeeder extends Seeder
         $administrator->name = "admin D&N";
         $administrator->email = "dntourtr@dntourtravel.com";
         $administrator->phone = "6288222668778";
-        $administrator->photo = NULL;
         $administrator->password = Hash::make("123654Bismillah");
         $administrator->roles = json_encode(["ADMIN"]);
         $administrator->status = "ACTIVE";
@@ -28,6 +27,7 @@ class AdministratorSeeder extends Seeder
         $administrator->save();
         $administrator_profile = new Profile;
         $administrator_profile->username = trim(preg_replace('/\s+/', '_', $administrator->name));
+        $administrator_profile->photo = NULL;
         $administrator_profile->address = 'Jl. Hercules Komplek Melong Green Garder';
         $administrator_profile->city = 'Cimahi Selatan';
         $administrator_profile->district = 'Melong';

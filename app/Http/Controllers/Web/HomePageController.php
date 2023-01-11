@@ -19,6 +19,10 @@ class HomePageController extends Controller
             ],
             'login' => [
                 'image' => asset('images/web-asset/new-hero-mobile2.jpg'),
+            ],
+            'activate' => [
+                'first_vector' => asset('images/web-asset/vector/3891942.jpg'),
+                'second_vector' => asset('images/web-asset/vector/4853748.jpg')
             ]
         ];
         return view('home.app')->with('context', $context);

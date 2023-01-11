@@ -129,6 +129,7 @@ class RegisterController extends Controller
                 $user_activation->status = 'ACTIVE';
                 $user_activation->save();
                 $new_user_active = User::findOrFail($id);
+
                 return response()->json([
                     'success' => true,
                     'message' => "Hallo, {$new_user_active->name}, akun kamu berhasil diaktivasi!",

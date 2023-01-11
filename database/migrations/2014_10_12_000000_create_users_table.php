@@ -17,8 +17,6 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('g_avatar')->nullable();
-            $table->string('photo')->nullable();
             $table->string('password');
             $table->string('roles');
             $table->enum('status', ['ACTIVE', 'INACTIVE']);
