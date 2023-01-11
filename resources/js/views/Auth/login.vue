@@ -1,6 +1,6 @@
 <template>
     <default-layout>
-        <section class="h-screen">
+        <section class="h-screen mt-6">
             <div class="container px-6 py-12 h-full">
                 <div
                     class="flex justify-center items-center flex-wrap h-full g-6 text-gray-800"
@@ -13,6 +13,13 @@
                         />
                     </div>
                     <div class="md:w-8/12 lg:w-5/12 lg:ml-20">
+                        <center>
+                            <img
+                                :src="context.hero.logo"
+                                class="mb-6 w-48"
+                                alt="brand-logo"
+                            />
+                        </center>
                         <form @submit.prevent="login">
                             <!-- Email input -->
                             <div class="mb-6">

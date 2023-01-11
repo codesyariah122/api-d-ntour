@@ -3262,6 +3262,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -30369,15 +30376,15 @@ var render = function () {
     "div",
     {
       staticClass:
-        "px-6 py-12 md:px-12 bg-gray-50 text-gray-800 text-center lg:text-left",
+        "px-6 py-12 mt-6 md:px-12 bg-gray-50 text-gray-800 text-center lg:text-left",
     },
     [
       _c("div", { staticClass: "container mx-auto xl:px-32" }, [
         _c(
           "div",
-          { staticClass: "grid lg:grid-cols-2 gap-12 flex items-center" },
+          { staticClass: "grid-cols-2 gap-4 sm:flex sm:items-center" },
           [
-            _c("div", { staticClass: "mt-12 lg:mt-0" }, [
+            _c("div", { staticClass: "mt-12 lg:mt-0 w-80" }, [
               _c(
                 "h1",
                 {
@@ -30479,20 +30486,11 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("footer", { staticClass: "mt-auto top-0 w-full text-center" }, [
+    _vm._v("\n    © D & N Tour Travel\n"),
+  ])
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("footer", { staticClass: "mt-auto top-0 w-full text-center" }, [
-        _vm._v("\n        © D & N Tour Travel\n    "),
-      ]),
-    ])
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -30701,7 +30699,7 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("default-layout", [
-    _c("section", { staticClass: "h-screen" }, [
+    _c("section", { staticClass: "h-screen mt-6" }, [
       _c("div", { staticClass: "container px-6 py-12 h-full" }, [
         _c(
           "div",
@@ -30717,202 +30715,216 @@ var render = function () {
               }),
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "md:w-8/12 lg:w-5/12 lg:ml-20" }, [
-              _c(
-                "form",
-                {
-                  on: {
-                    submit: function ($event) {
-                      $event.preventDefault()
-                      return _vm.login.apply(null, arguments)
+            _c(
+              "div",
+              { staticClass: "md:w-8/12 lg:w-5/12 lg:ml-20" },
+              [
+                _c("center", [
+                  _c("img", {
+                    staticClass: "mb-6 w-48",
+                    attrs: { src: _vm.context.hero.logo, alt: "brand-logo" },
+                  }),
+                ]),
+                _vm._v(" "),
+                _c(
+                  "form",
+                  {
+                    on: {
+                      submit: function ($event) {
+                        $event.preventDefault()
+                        return _vm.login.apply(null, arguments)
+                      },
                     },
                   },
-                },
-                [
-                  _c("div", { staticClass: "mb-6" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.form.email,
-                          expression: "form.email",
+                  [
+                    _c("div", { staticClass: "mb-6" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.form.email,
+                            expression: "form.email",
+                          },
+                        ],
+                        staticClass:
+                          "form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none",
+                        attrs: { type: "text", placeholder: "Email address" },
+                        domProps: { value: _vm.form.email },
+                        on: {
+                          input: function ($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.form, "email", $event.target.value)
+                          },
                         },
-                      ],
-                      staticClass:
-                        "form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none",
-                      attrs: { type: "text", placeholder: "Email address" },
-                      domProps: { value: _vm.form.email },
-                      on: {
-                        input: function ($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.form, "email", $event.target.value)
+                      }),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "mb-6" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.form.password,
+                            expression: "form.password",
+                          },
+                        ],
+                        staticClass:
+                          "form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none",
+                        attrs: { type: "password", placeholder: "Password" },
+                        domProps: { value: _vm.form.password },
+                        on: {
+                          input: function ($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.form, "password", $event.target.value)
+                          },
                         },
-                      },
-                    }),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "mb-6" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.form.password,
-                          expression: "form.password",
-                        },
-                      ],
-                      staticClass:
-                        "form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none",
-                      attrs: { type: "password", placeholder: "Password" },
-                      domProps: { value: _vm.form.password },
-                      on: {
-                        input: function ($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.form, "password", $event.target.value)
-                        },
-                      },
-                    }),
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "flex justify-between items-center mb-6" },
-                    [
-                      _c("div", { staticClass: "form-group form-check" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.remember_me,
-                              expression: "remember_me",
+                      }),
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "flex justify-between items-center mb-6" },
+                      [
+                        _c("div", { staticClass: "form-group form-check" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.remember_me,
+                                expression: "remember_me",
+                              },
+                            ],
+                            staticClass:
+                              "form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer",
+                            attrs: {
+                              type: "checkbox",
+                              id: "exampleCheck3",
+                              checked: "",
                             },
-                          ],
-                          staticClass:
-                            "form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer",
-                          attrs: {
-                            type: "checkbox",
-                            id: "exampleCheck3",
-                            checked: "",
-                          },
-                          domProps: {
-                            checked: Array.isArray(_vm.remember_me)
-                              ? _vm._i(_vm.remember_me, null) > -1
-                              : _vm.remember_me,
-                          },
-                          on: {
-                            change: function ($event) {
-                              var $$a = _vm.remember_me,
-                                $$el = $event.target,
-                                $$c = $$el.checked ? true : false
-                              if (Array.isArray($$a)) {
-                                var $$v = null,
-                                  $$i = _vm._i($$a, $$v)
-                                if ($$el.checked) {
-                                  $$i < 0 &&
-                                    (_vm.remember_me = $$a.concat([$$v]))
+                            domProps: {
+                              checked: Array.isArray(_vm.remember_me)
+                                ? _vm._i(_vm.remember_me, null) > -1
+                                : _vm.remember_me,
+                            },
+                            on: {
+                              change: function ($event) {
+                                var $$a = _vm.remember_me,
+                                  $$el = $event.target,
+                                  $$c = $$el.checked ? true : false
+                                if (Array.isArray($$a)) {
+                                  var $$v = null,
+                                    $$i = _vm._i($$a, $$v)
+                                  if ($$el.checked) {
+                                    $$i < 0 &&
+                                      (_vm.remember_me = $$a.concat([$$v]))
+                                  } else {
+                                    $$i > -1 &&
+                                      (_vm.remember_me = $$a
+                                        .slice(0, $$i)
+                                        .concat($$a.slice($$i + 1)))
+                                  }
                                 } else {
-                                  $$i > -1 &&
-                                    (_vm.remember_me = $$a
-                                      .slice(0, $$i)
-                                      .concat($$a.slice($$i + 1)))
+                                  _vm.remember_me = $$c
                                 }
-                              } else {
-                                _vm.remember_me = $$c
-                              }
+                              },
                             },
-                          },
-                        }),
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "label",
+                            {
+                              staticClass:
+                                "form-check-label inline-block text-gray-800",
+                              attrs: { for: "exampleCheck2" },
+                            },
+                            [_vm._v("Remember me")]
+                          ),
+                        ]),
                         _vm._v(" "),
                         _c(
-                          "label",
+                          "a",
                           {
                             staticClass:
-                              "form-check-label inline-block text-gray-800",
-                            attrs: { for: "exampleCheck2" },
+                              "text-blue-600 hover:text-blue-700 focus:text-blue-700 active:text-blue-800 duration-200 transition ease-in-out",
+                            attrs: { href: "#!" },
                           },
-                          [_vm._v("Remember me")]
+                          [_vm._v("Forgot password?")]
                         ),
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "a",
-                        {
-                          staticClass:
-                            "text-blue-600 hover:text-blue-700 focus:text-blue-700 active:text-blue-800 duration-200 transition ease-in-out",
-                          attrs: { href: "#!" },
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass:
+                          "inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out w-full",
+                        attrs: {
+                          type: "submit",
+                          "data-mdb-ripple": "true",
+                          "data-mdb-ripple-color": "light",
                         },
-                        [_vm._v("Forgot password?")]
-                      ),
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass:
-                        "inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out w-full",
-                      attrs: {
-                        type: "submit",
-                        "data-mdb-ripple": "true",
-                        "data-mdb-ripple-color": "light",
                       },
-                    },
-                    [
-                      _c(
-                        "div",
-                        { staticClass: "flex justify-center items-center" },
-                        [
-                          _vm.loginLoading
-                            ? _c(
-                                "div",
-                                {
-                                  staticClass:
-                                    "spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full",
-                                  attrs: { role: "status" },
-                                },
-                                [
-                                  _c(
-                                    "span",
-                                    { staticClass: "visually-hidden" },
-                                    [_vm._v("Loading...")]
-                                  ),
-                                ]
-                              )
-                            : _c("div", { staticClass: "flex-none" }, [
-                                _vm._v("Sign in"),
-                              ]),
-                        ]
-                      ),
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5",
-                    },
-                    [
-                      _c(
-                        "p",
-                        { staticClass: "text-center font-semibold mx-4 mb-0" },
-                        [
-                          _vm._v(
-                            "\n                                OR\n                            "
-                          ),
-                        ]
-                      ),
-                    ]
-                  ),
-                ]
-              ),
-            ]),
+                      [
+                        _c(
+                          "div",
+                          { staticClass: "flex justify-center items-center" },
+                          [
+                            _vm.loginLoading
+                              ? _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full",
+                                    attrs: { role: "status" },
+                                  },
+                                  [
+                                    _c(
+                                      "span",
+                                      { staticClass: "visually-hidden" },
+                                      [_vm._v("Loading...")]
+                                    ),
+                                  ]
+                                )
+                              : _c("div", { staticClass: "flex-none" }, [
+                                  _vm._v("Sign in"),
+                                ]),
+                          ]
+                        ),
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5",
+                      },
+                      [
+                        _c(
+                          "p",
+                          {
+                            staticClass: "text-center font-semibold mx-4 mb-0",
+                          },
+                          [
+                            _vm._v(
+                              "\n                                OR\n                            "
+                            ),
+                          ]
+                        ),
+                      ]
+                    ),
+                  ]
+                ),
+              ],
+              1
+            ),
           ]
         ),
       ]),
