@@ -37,6 +37,7 @@
                             <div class="flex justify-between items-center mb-6">
                                 <div class="form-group form-check">
                                     <input
+                                        v-model="remember_me"
                                         type="checkbox"
                                         class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                                         id="exampleCheck3"
@@ -92,8 +93,8 @@
 </template>
 
 <script>
-import DefaultLayout from "../layouts/DefaultLayout.vue";
-import { checkLogin, getRoles } from "../helpers.js";
+import DefaultLayout from "../../layouts/DefaultLayout.vue";
+import { checkLogin, getRoles } from "../../helpers.js";
 
 export default {
     name: "Home",
@@ -105,8 +106,12 @@ export default {
             context: window?.context,
             api_url: process.env.MIX_API_URL,
             form: {},
+            remember_me: false,
             loginLoading: null,
             userData: {},
+            name: "",
+            userName: "",
+            roles: "",
         };
     },
 
@@ -139,6 +144,17 @@ export default {
                 text: `Welcome ${data}`,
             });
         },
+        isActivateAlert(msg, link) {
+            this.$swal({
+                icon: "error",
+                title: `Oops ${msg}`,
+                text: "Please activate user now !!",
+                footer: `<a href="${link}">Activate user from this link?</a>`,
+            });
+            setTimeout(() => {
+                this.loginLoading = false;
+            }, 1500);
+        },
         isErrorAlert(msg, empty) {
             this.$swal({
                 icon: "error",
@@ -163,30 +179,31 @@ export default {
                 this.loginLoading = false;
             }, 1500);
         },
-        isSuccessAlert(msg, data) {
+        isSuccessAlert(msg, data, token) {
             this.$swal({
                 position: "top-end",
                 icon: "success",
-                title: `Halo, ${data?.data?.name} selamat datang`,
+                title: `Halo, ${data.name} selamat datang`,
                 showConfirmButton: false,
                 timer: 1500,
             });
 
-            const roles = getRoles(data?.data?.roles);
+            const roles = getRoles(data.roles);
+
             setTimeout(() => {
                 this.loginLoading = false;
-                localStorage.setItem(
-                    "token",
-                    JSON.stringify({ token: data?.token })
-                );
+                localStorage.setItem("token", JSON.stringify({ token: token }));
                 localStorage.setItem(
                     "user-roles",
                     JSON.stringify({
-                        username: data?.data?.username,
+                        username: this.username,
                         roles: roles,
                     })
                 );
-                this.$router.push(`/dashboard/${roles}`);
+
+                roles === "admin"
+                    ? this.$router.push(`/dashboard/${roles}`)
+                    : this.$router.push(`/profile/${this.username}`);
             }, 1500);
         },
         login() {
@@ -205,25 +222,41 @@ export default {
                     const endPoint = `${this.api_url}/auth/login`;
                     this.axios
                         .post(endPoint, {
-                            email: this.form.email,
-                            password: this.form.password,
+                            email: this.form?.email,
+                            password: this.form?.password,
+                            remember_me: this.remember_me,
                         })
                         .then(({ data }) => {
                             if (data.not_found) {
                                 this.isNotFoundAlert(data.message);
                             } else {
-                                if (!data.success) {
-                                    this.isErrorAlert(data.message, false);
+                                if (data.in_active) {
+                                    this.isActivateAlert(
+                                        data.message,
+                                        data.link
+                                    );
+                                } else {
+                                    if (!data.success) {
+                                        this.isErrorAlert(data.message, false);
+                                    } else {
+                                        this.isSuccessAlert(
+                                            data.message,
+                                            data.data[0],
+                                            data.token
+                                        );
+                                        data.data?.map((u) => {
+                                            u?.profiles.map((profile) => {
+                                                this.username =
+                                                    profile.username;
+                                            });
+                                        });
+                                        this.userData = data.data[0];
+                                    }
                                 }
-                                this.isSuccessAlert(data.message, data);
-                                this.userData = data.data;
                             }
                         })
                         .catch((err) => {
-                            if (err) {
-                                console.log(err.message);
-                                this.isErrorAlert(err.message);
-                            }
+                            console.log(err);
                         });
                 }
             } catch (err) {

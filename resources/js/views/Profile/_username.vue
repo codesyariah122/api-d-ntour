@@ -31,7 +31,7 @@
                 ></path>
             </svg>
             Halo, welcome back {{ user.name }} with activation id
-            {{ user.activation_id }}
+            {{ user.activation_id }} , login as {{ username }}
         </div>
     </div>
 </template>
@@ -47,6 +47,7 @@ export default {
             server_url: process.env.MIX_SERVER_URL,
             api_url: process.env.MIX_API_URL,
             user: {},
+            username: "",
             userId: null,
         };
     },
@@ -65,6 +66,7 @@ export default {
                         .get(endPoint)
                         .then(({ data }) => {
                             this.user = data?.data;
+                            this.username = data?.data?.profiles[0].username;
                             this.userId = data?.data?.id;
                         })
                         .catch((err) => console.log(err.message));

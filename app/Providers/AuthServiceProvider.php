@@ -27,6 +27,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
         Passport::routes();
 
+
         Gate::define('dashboard', function ($user) {
             return count(array_intersect(["ADMIN"], json_decode($user->roles))) ? true :  false;
         });

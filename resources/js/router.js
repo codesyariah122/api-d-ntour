@@ -1,6 +1,8 @@
 import Home from "./views/Home";
-import Login from "./views/login";
+import Login from "./views/Auth/login";
 import Admin from "./views/Dashboard/_role";
+import Profile from "./views/Profile/_username";
+import Success from "./views/Auth/success";
 
 export const routes = [
     {
@@ -10,12 +12,22 @@ export const routes = [
     },
     {
         name: "login",
-        path: "/login",
+        path: "/auth/login",
         component: Login,
     },
     {
         name: "admin",
         path: "/dashboard/:role",
         component: Admin,
+    },
+    {
+        name: "customer",
+        path: "/profile/:username",
+        component: Profile,
+    },
+    {
+        name: "success",
+        path: "/auth/success",
+        component: Success,
     },
 ];

@@ -27,4 +27,9 @@ Route::prefix('v1/auth')->group(function () {
     Route::put('/activation/{user_id}', [RegisterController::class, 'activation']);
     Route::post('/login', [LoginController::class, 'login']);
     Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth:api');
+
+    // provider oauth
+    Route::get('/redirect/{provider}', [RedirectProviderController::class, 'redirectToProvider']);
+
+    Route::get('/{provider}/callback', [RedirectProviderController::class, 'handleProviderCallback']);
 });

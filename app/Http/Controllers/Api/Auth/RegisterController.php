@@ -79,7 +79,7 @@ class RegisterController extends Controller
                 'title' => 'Kamu Telah Berhasil Registrasi Di Website D & N Tour Travel',
                 'url' => 'https://dntourtravel.com',
                 'id' => $user->id,
-                'username' => $user->username,
+                'username' => $user->name,
                 'email' => $user->email,
                 'phone' => $user->phone,
                 'token' => $user_activation->token
@@ -105,15 +105,41 @@ class RegisterController extends Controller
     public function activation(Request $request, $id)
     {
         try {
-            $user_activation = User::findOrFail($id);
-            $user_activation->status = 'ACTIVE';
-            $user_activation->activation_id = null;
-            $user_activation->save();
-            $new_user_active = User::findOrFail($id);
-            return response()->json([
-                'message' => "Hallo, {$new_user_active->name}, akun kamu berhasil diaktivasi!",
-                'data' => $new_user_active
-            ], 200);
+
+            if ($request->activation_id) {
+                $checkUserActivation = User::findOrFail($id);
+                $username = $checkUserActivation->profiles[0]->username;
+
+
+                if ($checkUserActivation->status === "ACTIVE") {
+                    return response()->json([
+                        'active' => true,
+                        'message' => 'Your account has been ACTIVE !',
+                        'redirect_link' => env('FRONTEND_APP') . '/profile/' . $username
+                    ]);
+                }
+
+                if ($request->activation_id !== $checkUserActivation->activation_id) {
+                    return response()->json([
+                        'valid' => false,
+                        'message' => 'Activation id not valid !!'
+                    ]);
+                }
+                $user_activation = User::findOrFail($id);
+                $user_activation->status = 'ACTIVE';
+                $user_activation->save();
+                $new_user_active = User::findOrFail($id);
+                return response()->json([
+                    'success' => true,
+                    'message' => "Hallo, {$new_user_active->name}, akun kamu berhasil diaktivasi!",
+                    'data' => $new_user_active
+                ], 200);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Activation id not found !!'
+                ]);
+            }
         } catch (\Throwable $th) {
             throw $th;
         }
