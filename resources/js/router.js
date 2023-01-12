@@ -4,6 +4,8 @@ import Admin from "./views/Dashboard/_role";
 import Profile from "./views/Profile/_username";
 import Success from "./views/Auth/success";
 import Activated from "./views/Activated/index";
+import Forgot from "./views/Auth/forgot/index";
+import Reset from "./views/Auth/reset/_token-reset";
 
 export const routes = [
     {
@@ -32,8 +34,18 @@ export const routes = [
         component: Success,
     },
     {
-        name: "success",
+        name: "activated-success",
         path: "/activated/:token",
         component: Activated,
+    },
+    {
+        name: "forgot",
+        path: "/auth/forgot",
+        component: Forgot,
+    },
+    {
+        name: "reset",
+        path: "/auth/reset/:token_reset",
+        component: Reset,
     },
 ];

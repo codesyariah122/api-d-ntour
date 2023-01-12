@@ -6,13 +6,21 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Http;
 use Laravel\Passport\Passport;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
-use Illuminate\Support\Carbon;
 use App\Models\User;
+use App\Helpers\UserHelpers;
 
 class LoginController extends Controller
 {
+    private $helper;
+
+    public function __construct()
+    {
+        $this->helper = new UserHelpers;
+    }
 
     private function forbidenIsUserLogin($isLogin)
     {
@@ -32,6 +40,15 @@ class LoginController extends Controller
             }
 
             $user = User::where('email', $request->email)->first();
+
+            $big_data_key = env('API_KEY_BIG_DATA');
+            $ip_address = $this->helper->getIpAddr();
+            $get_ipaddr = $ip_address === '127.0.0.1' ? '103.139.10.39' : $ip_address;
+
+            $userDetect = Http::get("https://api.bigdatacloud.net/data/timezone-by-ip?ip={$get_ipaddr}&key={$big_data_key}")->json();
+
+            $current = Carbon::now()->setTimezone($userDetect['ianaTimeId']);
+            $expires_date = Carbon::now()->addRealDays(1)->setTimezone($userDetect['ianaTimeId']);
 
             if (!$user) {
                 return response()->json([
@@ -57,20 +74,21 @@ class LoginController extends Controller
                             $last_login = Carbon::parse($user->last_login)->diffForHumans();
                             return response()->json([
                                 'is_login' => true,
-                                'message' => "Sorry, this account is already login at {$last_login} a go",
+                                'message' => "Sorry, this account is already login at {$last_login}",
                                 'quote' => 'Please check the notification again!'
                             ]);
                         }
+
                         $token = $user->createToken('authToken')->accessToken;
 
                         $user_login = User::findOrFail($user->id);
                         $user_login->is_login = 1;
 
                         if ($request->remember_me) {
-                            $user_login->expires_at = now()->addRealDays(1);
+                            $user_login->expires_at = Carbon::now()->addRealDays(1)->setTimezone($userDetect['ianaTimeId']);
                         }
-                        $user_login->expires_at = now()->addRealMinutes(60);
-                        $user_login->last_login = now();
+                        $user_login->expires_at = Carbon::now()->addRealMinutes(60)->setTimezone($userDetect['ianaTimeId']);
+                        $user_login->last_login = $current;
                         $user_login->remember_token = Str::random(32);
                         $user_login->save();
 
@@ -80,6 +98,7 @@ class LoginController extends Controller
                             'success' => true,
                             'message' => 'Login Success!',
                             'data'    => $userIsLogin,
+                            'remember_token' => $user_login->remember_token,
                             'token'   => $token
                         ]);
                     }

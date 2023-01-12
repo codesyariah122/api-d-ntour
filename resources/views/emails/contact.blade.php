@@ -1,7 +1,7 @@
 <div style="background-color: #000; color: #fff;">
 
     <center>
-        <img src="{{url('images/web-asset/logo/D_N-Logo.png')}}" alt="" style="width: 100px;">
+        <img src="{{asset('images/web-asset/logo/D_N-Logo.png')}}" alt="" style="width: 100px;">
         <h5 style="margin-top: 2rem; margin-bottom: 2rem;">{{$details['title']}}</h5>
     </center>
 

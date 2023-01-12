@@ -38,6 +38,10 @@ class HomePageController extends Controller
             'activate' => [
                 'first_vector' => asset('images/web-asset/vector/3891942.jpg'),
                 'second_vector' => asset('images/web-asset/vector/4853748.jpg')
+            ],
+            'forgot' => [
+                'first_vector' => asset('images/web-asset/vector/forgot.jpg'),
+                'second_vector' => asset('images/web-asset/vector/reset.jpg')
             ]
         ];
         return view('home.app', $context)->with('context', $context);

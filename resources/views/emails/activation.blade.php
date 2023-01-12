@@ -1,5 +1,5 @@
 <div style="backgound-color: #1b1b1b">
-    <img src="{{url('images/web-asset/logo/D_N-Logo.png')}}" alt="" style="width: 100px;">
+    <img src="{{asset('images/web-asset/logo/D_N-Logo.png')}}" alt="" style="width: 100px;">
 
     <h5>{{$details['title']}}</h5>
 

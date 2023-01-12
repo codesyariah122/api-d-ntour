@@ -106,10 +106,10 @@ export default {
                                     );
                                     localStorage.removeItem("token");
                                     localStorage.removeItem("user-roles");
-                                    this.$router.push("/");
+                                    this.$router.replace("/");
                                 }
                             })
-                            .catch((err) => console.log(err.message));
+                            .catch((err) => console.log(err.response));
                     }
                 });
             } catch (err) {

@@ -29,16 +29,53 @@
                                     placeholder="Email address"
                                     v-model="form.email"
                                 />
+                                <div v-if="validation.email">
+                                    <small
+                                        class="text-red-600 font-bold font-mono"
+                                    >
+                                        {{ validation.email[0] }}
+                                    </small>
+                                </div>
                             </div>
 
                             <!-- Password input -->
                             <div class="mb-6">
-                                <input
-                                    type="password"
-                                    class="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                                    placeholder="Password"
-                                    v-model="form.password"
-                                />
+                                <div
+                                    class="flex justify-center border border-solid bg-white bg-clip-padding border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                >
+                                    <div class="grow h-8 w-full mt-2 md:ml-4">
+                                        <input
+                                            id="password"
+                                            type="password"
+                                            class="form-control text-xl font-normal text-gray-700 border-none focus:outline-none focus:border-0 focus:ring-0 focus:border-transparent"
+                                            placeholder="Password"
+                                            v-model="form.password"
+                                        />
+                                    </div>
+                                    <div class="grow-0 h-10 mt-3 md:mr-4">
+                                        <span
+                                            @click="showPassword"
+                                            class="cursor-pointer"
+                                        >
+                                            <font-awesome-icon
+                                                v-if="!showing"
+                                                icon="fa-eye fa-lg"
+                                            />
+
+                                            <font-awesome-icon
+                                                v-else
+                                                icon="fa-eye-slash fa-lg"
+                                            />
+                                        </span>
+                                    </div>
+                                </div>
+                                <div v-if="validation.password">
+                                    <small
+                                        class="mt-2 text-red-600 font-bold font-mono"
+                                    >
+                                        {{ validation.password[0] }}
+                                    </small>
+                                </div>
                             </div>
 
                             <div class="flex justify-between items-center mb-6">
@@ -57,7 +94,7 @@
                                     >
                                 </div>
                                 <a
-                                    href="#!"
+                                    :href="`/auth/forgot`"
                                     class="text-blue-600 hover:text-blue-700 focus:text-blue-700 active:text-blue-800 duration-200 transition ease-in-out"
                                     >Forgot password?</a
                                 >
@@ -112,6 +149,7 @@ export default {
         return {
             context: window?.context,
             api_url: process.env.MIX_API_URL,
+            server_url: process.env.MIX_SERVER_URL,
             form: {},
             remember_me: false,
             loginLoading: null,
@@ -119,6 +157,9 @@ export default {
             name: "",
             userName: "",
             roles: "",
+            apiToken: process.env.MIX_API_TOKEN,
+            showing: false,
+            validation: [],
         };
     },
 
@@ -127,21 +168,42 @@ export default {
     },
 
     methods: {
+        showPassword() {
+            const password = document.querySelector("#password");
+            if (password.type === "password") {
+                password.type = "text";
+                this.showing = true;
+            } else {
+                password.type = "password";
+                this.showing = false;
+            }
+        },
         isLogin() {
-            const roles = localStorage.getItem("user-roles")
-                ? JSON.parse(localStorage.getItem("user-roles"))
-                : null;
-            const token = localStorage.getItem("token")
-                ? JSON.parse(localStorage.getItem("token"))
-                : null;
-            if (token) {
-                this.isLoginAlert(
-                    `You are is login as a ${roles.roles} Roles`,
-                    roles.roles
-                );
-                setTimeout(() => {
-                    this.$router.push(`/dashboard/${roles?.roles}`);
-                }, 2500);
+            try {
+                const token = localStorage.getItem("token")
+                    ? JSON.parse(localStorage.getItem("token"))
+                    : null;
+                const endPoint = `${this.server_url}/api/user`;
+                this.axios.defaults.headers.common.Authorization = `Bearer ${token.token}`;
+                this.axios
+                    .get(endPoint)
+                    .then(({ data }) => {
+                        const roles = getRoles(data?.data?.roles);
+                        if (data?.data?.is_login || token) {
+                            this.isLoginAlert(
+                                `You are is login as a ${roles} Roles`,
+                                roles
+                            );
+                            setTimeout(() => {
+                                this.$router.push(`/dashboard/${roles}`);
+                            }, 2500);
+                        }
+                    })
+                    .catch((err) => {
+                        console.log(err.response);
+                    });
+            } catch (err) {
+                console.log(err);
             }
         },
         isLoginAlert(msg, data) {
@@ -216,56 +278,51 @@ export default {
         login() {
             try {
                 this.loginLoading = true;
-                const isEmpty = Object.values(this.form).every((val) => {
-                    if (val === null || val === "") {
-                        return true;
-                    }
-                    return false;
-                });
-
-                if (isEmpty) {
-                    this.isErrorAlert("check input form login !!", isEmpty);
-                } else {
-                    const endPoint = `${this.api_url}/auth/login`;
-                    this.axios
-                        .post(endPoint, {
-                            email: this.form?.email,
-                            password: this.form?.password,
-                            remember_me: this.remember_me,
-                        })
-                        .then(({ data }) => {
-                            if (data.not_found) {
-                                this.isNotFoundAlert(data.message);
+                const endPoint = `${this.api_url}/auth/login`;
+                this.axios
+                    .post(endPoint, {
+                        email: this.form?.email,
+                        password: this.form?.password,
+                        remember_me: this.remember_me,
+                    })
+                    .then(({ data }) => {
+                        if (data.not_found) {
+                            this.isNotFoundAlert(data.message);
+                        } else {
+                            if (data.in_active) {
+                                this.isActivateAlert(data.message, data.link);
                             } else {
-                                if (data.in_active) {
-                                    this.isActivateAlert(
-                                        data.message,
-                                        data.link
-                                    );
+                                if (!data.success) {
+                                    this.isErrorAlert(data.message, false);
                                 } else {
-                                    if (!data.success) {
-                                        this.isErrorAlert(data.message, false);
-                                    } else {
-                                        this.isSuccessAlert(
-                                            data.message,
-                                            data.data[0],
-                                            data.token
-                                        );
-                                        data.data?.map((u) => {
-                                            u?.profiles.map((profile) => {
-                                                this.username =
-                                                    profile.username;
-                                            });
+                                    this.isSuccessAlert(
+                                        data.message,
+                                        data.data[0],
+                                        data.token
+                                    );
+                                    data.data?.map((u) => {
+                                        u?.profiles.map((profile) => {
+                                            this.username = profile.username;
                                         });
-                                        this.userData = data.data[0];
-                                    }
+                                    });
+                                    this.userData = data.data[0];
                                 }
                             }
-                        })
-                        .catch((err) => {
-                            console.log(err);
-                        });
-                }
+                        }
+                    })
+                    .catch((err) => {
+                        if (err.response.data) {
+                            this.$swal({
+                                icon: "error",
+                                title: "Oops...",
+                                text: "Something went wrong!",
+                            });
+                            setTimeout(() => {
+                                this.loginLoading = false;
+                                this.validation = err.response.data;
+                            }, 1500);
+                        }
+                    });
             } catch (err) {
                 console.log(err.message);
             }

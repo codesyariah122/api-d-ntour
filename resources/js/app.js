@@ -22,6 +22,7 @@ import {
     faSearch,
     faFemale,
     faMale,
+    faEyeSlash,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import VueSweetalert2 from "vue-sweetalert2";
@@ -33,6 +34,7 @@ library.add(
     faUserSecret,
     faTrash,
     faEye,
+    faEyeSlash,
     faEdit,
     faSearch,
     faFemale,
