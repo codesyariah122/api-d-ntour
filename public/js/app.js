@@ -31532,7 +31532,7 @@ var render = function () {
         _c("div", { staticClass: "container mx-auto xl:px-32" }, [
           _c(
             "div",
-            { staticClass: "grid lg:grid-cols-2 gap-12 flex items-center" },
+            { staticClass: "grid lg:grid-cols-2 gap-12 items-center" },
             [
               _c("div", { staticClass: "mt-12 lg:mt-0" }, [
                 _c(
@@ -31578,7 +31578,7 @@ var render = function () {
                     attrs: {
                       "data-mdb-ripple": "true",
                       "data-mdb-ripple-color": "light",
-                      href: "#!",
+                      href: "https://dntourtravel.com",
                       role: "button",
                     },
                   },
