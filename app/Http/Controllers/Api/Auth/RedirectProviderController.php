@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
+use Laravel\Socialite\Two\User as ProviderUser;
 use App\Helpers\UserHelpers;
 use Carbon\Carbon;
 use App\Models\User;
@@ -172,7 +173,7 @@ class RedirectProviderController extends Controller
                     $newuser->save();
                     // saving profile table
                     $profile = new Profile;
-                    $profile->username = trim(preg_replace('/\s+/', '_', strtolower($providerUser->name())));
+                    $profile->username = trim(preg_replace('/\s+/', '_', strtolower($providerUser->getName())));
                     $profile->g_avatar = $providerUser->getAvatar();
                     $profile->longitude = $locator['longitude'];
                     $profile->latitude = $locator['latitude'];
@@ -192,26 +193,28 @@ class RedirectProviderController extends Controller
 
                     // return $this->respondWithToken($token);
                     return redirect(env('FRONTEND_APP_TEST') . '/auth/success?access_token=' . $token);
+                } else {
+                    $user->is_login = 1;
+                    $user->last_login = $current;
+                    $user->save();
+
+                    $user_profile_data = User::with('profiles')->findOrFail($user->id);
+
+                    // var_dump($user_profile_data);
+                    // die;
+
+                    $profile = Profile::find($user_profile_data['profiles'][0]['id'])->first();
+
+                    $profile->longitude = $locator['longitude'];
+                    $profile->latitude = $locator['latitude'];
+                    $profile->post_code = $locator['zip'];
+                    $profile->save();
+
+                    $token = $user->createToken(env('apiToken'))->accessToken;
+
+                    // return $this->respondWithToken($token);
+                    return redirect(env('FRONTEND_APP_TEST') . '/auth/success?access_token=' . $token);
                 }
-
-
-                $user->is_login = 1;
-                $user->last_login = $current;
-                $user->save();
-
-                $user_profile_data = User::with('profiles')->findOrFail($user->id);
-
-                $profile = Profile::find($user_profile_data['profiles'][0]['id'])->first();
-
-                $profile->longitude = $locator['longitude'];
-                $profile->latitude = $locator['latitude'];
-                $profile->post_code = $locator['zip'];
-                $profile->save();
-
-                $token = $user->createToken(env('apiToken'))->accessToken;
-
-                // return $this->respondWithToken($token);
-                return redirect(env('FRONTEND_APP_TEST') . '/auth/success?access_token=' . $token);
             }
         } catch (\Exception $e) {
             return $this->sendError(self::UNAUTHORIZED, null, ['error' => $e->getMessage()]);

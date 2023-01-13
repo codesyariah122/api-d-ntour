@@ -39,6 +39,7 @@ export default {
 
     methods: {
         profile(id) {
+            // console.log(id);
             this.$router.push(`/profile/${id}`);
         },
         checkUserLogin() {

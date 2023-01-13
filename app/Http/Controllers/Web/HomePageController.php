@@ -42,6 +42,10 @@ class HomePageController extends Controller
             'forgot' => [
                 'first_vector' => asset('images/web-asset/vector/forgot.jpg'),
                 'second_vector' => asset('images/web-asset/vector/reset.jpg')
+            ],
+            'privacy' => [
+                'first_vector' => asset('images/web-asset/new-hero-mobile2.jpg'),
+                'second_vector' => asset('images/web-asset/parallax-mobile.jpg')
             ]
         ];
         return view('home.app', $context)->with('context', $context);

@@ -6,6 +6,7 @@ import Success from "./views/Auth/success";
 import Activated from "./views/Activated/index";
 import Forgot from "./views/Auth/forgot/index";
 import Reset from "./views/Auth/reset/_token-reset";
+import PrivacyPolicy from "./views/PrivacyPolicy";
 
 export const routes = [
     {
@@ -47,5 +48,10 @@ export const routes = [
         name: "reset",
         path: "/auth/reset/:token_reset",
         component: Reset,
+    },
+    {
+        name: "privacy",
+        path: "/privacy-policy",
+        component: PrivacyPolicy,
     },
 ];

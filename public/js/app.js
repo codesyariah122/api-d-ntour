@@ -2758,7 +2758,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       context: (_window = window) === null || _window === void 0 ? void 0 : _window.context,
       activation_id: this.$route.params.token,
-      api_url: "https://api.store.dntourtravel.com/api/v1",
+      api_url: "http://localhost:8000/api/v1",
       user: {},
       username: "",
       loadingUser: null,
@@ -2929,8 +2929,8 @@ __webpack_require__.r(__webpack_exports__);
     var _window;
     return {
       context: (_window = window) === null || _window === void 0 ? void 0 : _window.context,
-      apiToken: "JqbHAfUuY4bJV7GH63xPjQZnaXqQDA6b",
-      api_url: "https://api.store.dntourtravel.com/api/v1",
+      apiToken: "J5EzCAIV71em7uiCEruCxlgQKZOHmviU",
+      api_url: "http://localhost:8000/api/v1",
       loadingForgot: null,
       user: {},
       username: "",
@@ -3124,8 +3124,8 @@ __webpack_require__.r(__webpack_exports__);
     var _window;
     return {
       context: (_window = window) === null || _window === void 0 ? void 0 : _window.context,
-      apiToken: "JqbHAfUuY4bJV7GH63xPjQZnaXqQDA6b",
-      api_url: "https://api.store.dntourtravel.com/api/v1",
+      apiToken: "J5EzCAIV71em7uiCEruCxlgQKZOHmviU",
+      api_url: "http://localhost:8000/api/v1",
       token_reset: this.$route.params.token_reset,
       loadingReset: null,
       form: {},
@@ -3244,7 +3244,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       context: (_window = window) === null || _window === void 0 ? void 0 : _window.context,
       token: this.$route.query.access_token,
-      server_url: "https://api.store.dntourtravel.com",
+      server_url: "http://localhost:8000",
       user: {},
       google_id: ""
     };
@@ -3254,6 +3254,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     profile: function profile(id) {
+      // console.log(id);
       this.$router.push("/profile/".concat(id));
     },
     checkUserLogin: function checkUserLogin() {
@@ -3696,8 +3697,8 @@ __webpack_require__.r(__webpack_exports__);
     var _window;
     return {
       context: (_window = window) === null || _window === void 0 ? void 0 : _window.context,
-      api_url: "https://api.store.dntourtravel.com/api/v1",
-      server_url: "https://api.store.dntourtravel.com",
+      api_url: "http://localhost:8000/api/v1",
+      server_url: "http://localhost:8000",
       form: {},
       remember_me: false,
       loginLoading: null,
@@ -3705,7 +3706,7 @@ __webpack_require__.r(__webpack_exports__);
       name: "",
       userName: "",
       roles: "",
-      apiToken: "JqbHAfUuY4bJV7GH63xPjQZnaXqQDA6b",
+      apiToken: "J5EzCAIV71em7uiCEruCxlgQKZOHmviU",
       showing: false,
       validation: []
     };
@@ -3978,8 +3979,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       token: (0,_helpers__WEBPACK_IMPORTED_MODULE_0__.getToken)("token"),
       role: this.$route.params.role,
-      server_url: "https://api.store.dntourtravel.com",
-      api_url: "https://api.store.dntourtravel.com/api/v1",
+      server_url: "http://localhost:8000",
+      api_url: "http://localhost:8000/api/v1",
       user: {},
       userId: null
     };
@@ -4080,6 +4081,285 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/PrivacyPolicy.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/PrivacyPolicy.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _layouts_DefaultLayout_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../layouts/DefaultLayout.vue */ "./resources/js/layouts/DefaultLayout.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  components: {
+    DefaultLayout: _layouts_DefaultLayout_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    var _window;
+    return {
+      context: (_window = window) === null || _window === void 0 ? void 0 : _window.context
+    };
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/Profile/_username.vue?vue&type=script&lang=js&":
 /*!*******************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/Profile/_username.vue?vue&type=script&lang=js& ***!
@@ -4139,8 +4419,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       token: (0,_helpers__WEBPACK_IMPORTED_MODULE_0__.getToken)("token"),
       role: this.$route.params.role,
-      server_url: "https://api.store.dntourtravel.com",
-      api_url: "https://api.store.dntourtravel.com/api/v1",
+      server_url: "http://localhost:8000",
+      api_url: "http://localhost:8000/api/v1",
       user: {},
       username: "",
       userId: null,
@@ -4330,6 +4610,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _views_Activated_index__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./views/Activated/index */ "./resources/js/views/Activated/index.vue");
 /* harmony import */ var _views_Auth_forgot_index__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./views/Auth/forgot/index */ "./resources/js/views/Auth/forgot/index.vue");
 /* harmony import */ var _views_Auth_reset_token_reset__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./views/Auth/reset/_token-reset */ "./resources/js/views/Auth/reset/_token-reset.vue");
+/* harmony import */ var _views_PrivacyPolicy__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./views/PrivacyPolicy */ "./resources/js/views/PrivacyPolicy.vue");
+
 
 
 
@@ -4370,6 +4652,10 @@ var routes = [{
   name: "reset",
   path: "/auth/reset/:token_reset",
   component: _views_Auth_reset_token_reset__WEBPACK_IMPORTED_MODULE_7__["default"]
+}, {
+  name: "privacy",
+  path: "/privacy-policy",
+  component: _views_PrivacyPolicy__WEBPACK_IMPORTED_MODULE_8__["default"]
 }];
 
 /***/ }),
@@ -30269,6 +30555,45 @@ component.options.__file = "resources/js/views/Home.vue"
 
 /***/ }),
 
+/***/ "./resources/js/views/PrivacyPolicy.vue":
+/*!**********************************************!*\
+  !*** ./resources/js/views/PrivacyPolicy.vue ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _PrivacyPolicy_vue_vue_type_template_id_ade7a16a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PrivacyPolicy.vue?vue&type=template&id=ade7a16a& */ "./resources/js/views/PrivacyPolicy.vue?vue&type=template&id=ade7a16a&");
+/* harmony import */ var _PrivacyPolicy_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PrivacyPolicy.vue?vue&type=script&lang=js& */ "./resources/js/views/PrivacyPolicy.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _PrivacyPolicy_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _PrivacyPolicy_vue_vue_type_template_id_ade7a16a___WEBPACK_IMPORTED_MODULE_0__.render,
+  _PrivacyPolicy_vue_vue_type_template_id_ade7a16a___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/views/PrivacyPolicy.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/views/Profile/_username.vue":
 /*!**************************************************!*\
   !*** ./resources/js/views/Profile/_username.vue ***!
@@ -30545,6 +30870,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Home_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Home.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/Home.vue?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Home_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/views/PrivacyPolicy.vue?vue&type=script&lang=js&":
+/*!***********************************************************************!*\
+  !*** ./resources/js/views/PrivacyPolicy.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PrivacyPolicy_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./PrivacyPolicy.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/PrivacyPolicy.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PrivacyPolicy_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -30832,6 +31173,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Home_vue_vue_type_template_id_63cd6604___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Home_vue_vue_type_template_id_63cd6604___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Home.vue?vue&type=template&id=63cd6604& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/Home.vue?vue&type=template&id=63cd6604&");
+
+
+/***/ }),
+
+/***/ "./resources/js/views/PrivacyPolicy.vue?vue&type=template&id=ade7a16a&":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/views/PrivacyPolicy.vue?vue&type=template&id=ade7a16a& ***!
+  \*****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PrivacyPolicy_vue_vue_type_template_id_ade7a16a___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PrivacyPolicy_vue_vue_type_template_id_ade7a16a___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PrivacyPolicy_vue_vue_type_template_id_ade7a16a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./PrivacyPolicy.vue?vue&type=template&id=ade7a16a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/PrivacyPolicy.vue?vue&type=template&id=ade7a16a&");
 
 
 /***/ }),
@@ -32352,6 +32710,363 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("default-layout", [_c("Hero")], 1)
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/PrivacyPolicy.vue?vue&type=template&id=ade7a16a&":
+/*!********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/PrivacyPolicy.vue?vue&type=template&id=ade7a16a& ***!
+  \********************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("default-layout", [
+    _c(
+      "div",
+      { staticClass: "flex justify-center place-content-center py-24 px-24" },
+      [
+        _c(
+          "div",
+          {
+            staticClass:
+              "flex flex-col md:flex-row max-w-screen rounded-lg bg-white shadow-lg",
+          },
+          [
+            _c("img", {
+              staticClass:
+                "w-screen h-96 md:h-96 object-cover md:w-48 rounded-t-lg md:rounded-none md:rounded-l-lg",
+              attrs: { src: _vm.context.privacy.second_vector, alt: "" },
+            }),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "p-6 flex flex-col justify-start w-full" },
+              [
+                _c("h1", { staticClass: "font-bold text-3xl font-serif" }, [
+                  _vm._v(
+                    "\n                    Privacy Policy for D & N Tour Travel\n                "
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "text-justify py-6" }, [
+                  _vm._v("\n                    At\n                    "),
+                  _c("span", { staticClass: "font-bold font-mono text-1xl" }, [
+                    _vm._v("D & N Tour Travel"),
+                  ]),
+                  _vm._v(
+                    "\n                    , accessible from\n                    "
+                  ),
+                  _c(
+                    "a",
+                    {
+                      staticClass:
+                        "text-blue-600 hover:text-blue-700 font-semibold underline box-decoration-slice",
+                      attrs: { href: "https://dntourtravel.com/" },
+                    },
+                    [_vm._v("dntourtravel website")]
+                  ),
+                  _vm._v(
+                    ", one of our main priorities is the privacy of our\n                    visitors. This Privacy Policy document contains types of\n                    information that is collected and recorded by\n                    "
+                  ),
+                  _c("span", { staticClass: "font-bold text-1xl" }, [
+                    _vm._v("D & N Tour Travel"),
+                  ]),
+                  _vm._v(
+                    "\n                    and how we use it.\n                "
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "py-6 text-justify font-mono" }, [
+                  _vm._v(
+                    "\n                    If you have additional questions or require more\n                    information about our Privacy Policy, do not hesitate to\n                    contact us.\n                "
+                  ),
+                ]),
+                _vm._v(" "),
+                _c(
+                  "h2",
+                  { staticClass: "font-bold text-2xl font-serif mt-12" },
+                  [_vm._v("\n                    Log Files\n                ")]
+                ),
+                _vm._v(" "),
+                _c("p", { staticClass: "py-6 text-justify font-mono" }, [
+                  _c("span", { staticClass: "font-bold text-1xl" }, [
+                    _vm._v("D & N Tour Travel"),
+                  ]),
+                  _vm._v(
+                    "\n                    follows a standard procedure of using log files. These\n                    files log visitors when they visit websites. All hosting\n                    companies do this and a part of hosting services'\n                    analytics. The information collected by log files\n                    include internet protocol (IP) addresses, browser type,\n                    Internet Service Provider (ISP), date and time stamp,\n                    referring/exit pages, and possibly the number of clicks.\n                    These are not linked to any information that is\n                    personally identifiable. The purpose of the information\n                    is for analyzing trends, administering the site,\n                    tracking users' movement on the website, and gathering\n                    demographic information. Our Privacy Policy was created\n                    with the help of the\n                    "
+                  ),
+                  _c(
+                    "a",
+                    {
+                      staticClass:
+                        "text-blue-600 hover:text-blue-700 font-semibold underline box-decoration-slice",
+                      attrs: {
+                        href: "https://www.privacypolicyonline.com/privacy-policy-generator/",
+                      },
+                    },
+                    [_vm._v("Privacy Policy Generator")]
+                  ),
+                  _vm._v(".\n                "),
+                ]),
+                _vm._v(" "),
+                _c(
+                  "h2",
+                  { staticClass: "font-bold text-2xl font-serif mt-12" },
+                  [
+                    _vm._v(
+                      "\n                    Cookies and Web Beacons\n                "
+                    ),
+                  ]
+                ),
+                _vm._v(" "),
+                _c("p", { staticClass: "py-6 text-justify font-mono" }, [
+                  _vm._v(
+                    "\n                    Like any other website,\n                    "
+                  ),
+                  _c("span", { staticClass: "font-bold text-1xl" }, [
+                    _vm._v("D & N Tour Travel"),
+                  ]),
+                  _vm._v(
+                    "\n                    uses 'cookies'. These cookies are used to store\n                    information including visitors' preferences, and the\n                    pages on the website that the visitor accessed or\n                    visited. The information is used to optimize the users'\n                    experience by customizing our web page content based on\n                    visitors' browser type and/or other information.\n                "
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "py-6 text-justify font-mono" }, [
+                  _vm._v(
+                    "\n                    For more general information on cookies, please read\n                    "
+                  ),
+                  _c(
+                    "a",
+                    {
+                      staticClass:
+                        "text-blue-600 hover:text-blue-700 font-semibold underline box-decoration-slice",
+                      attrs: {
+                        href: "https://www.privacypolicyonline.com/what-are-cookies/",
+                      },
+                    },
+                    [
+                      _vm._v(
+                        'the "Cookies" article from the Privacy Policy\n                        Generator'
+                      ),
+                    ]
+                  ),
+                  _vm._v(".\n                "),
+                ]),
+                _vm._v(" "),
+                _c(
+                  "h2",
+                  { staticClass: "font-bold text-2xl font-serif mt-12" },
+                  [
+                    _vm._v(
+                      "\n                    Google DoubleClick DART Cookie\n                "
+                    ),
+                  ]
+                ),
+                _vm._v(" "),
+                _c("p", { staticClass: "py-6 text-justify font-mono" }, [
+                  _vm._v(
+                    "\n                    Google is one of a third-party vendor on our site. It\n                    also uses cookies, known as DART cookies, to serve ads\n                    to our site visitors based upon their visit to\n                    www.website.com and other sites on the internet.\n                    However, visitors may choose to decline the use of DART\n                    cookies by visiting the Google ad and content network\n                    Privacy Policy at the following URL –\n                    "
+                  ),
+                  _c(
+                    "a",
+                    {
+                      staticClass:
+                        "text-blue-600 hover:text-blue-700 font-semibold underline box-decoration-slice",
+                      attrs: {
+                        href: "https://policies.google.com/technologies/ads",
+                      },
+                    },
+                    [_vm._v("https://policies.google.com/technologies/ads")]
+                  ),
+                ]),
+                _vm._v(" "),
+                _c(
+                  "h2",
+                  { staticClass: "font-bold text-2xl font-serif mt-12" },
+                  [
+                    _vm._v(
+                      "\n                    Our Advertising Partners\n                "
+                    ),
+                  ]
+                ),
+                _vm._v(" "),
+                _c("p", { staticClass: "py-6 text-justify font-mono" }, [
+                  _vm._v(
+                    "\n                    Some of advertisers on our site may use cookies and web\n                    beacons. Our advertising partners are listed below. Each\n                    of our advertising partners has their own Privacy Policy\n                    for their policies on user data. For easier access, we\n                    hyperlinked to their Privacy Policies below.\n                "
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("ul", [
+                  _c("li", [
+                    _c("p", { staticClass: "py-6 font-bold font-mono" }, [
+                      _vm._v("Google"),
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "py-6 font-bold font-mono" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass:
+                            "text-blue-600 hover:text-blue-700 font-semibold underline box-decoration-slice",
+                          attrs: {
+                            href: "https://policies.google.com/technologies/ads",
+                          },
+                        },
+                        [_vm._v("https://policies.google.com/technologies/ads")]
+                      ),
+                    ]),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c(
+                  "h2",
+                  { staticClass: "font-bold text-2xl font-serif mt-12" },
+                  [
+                    _vm._v(
+                      "\n                    Privacy Policies\n                "
+                    ),
+                  ]
+                ),
+                _vm._v(" "),
+                _c("P", { staticClass: "py-6 text-justify font-mono" }, [
+                  _vm._v(
+                    "You may consult this list to find the Privacy Policy\n                    for each of the advertising partners of\n                    "
+                  ),
+                  _c("span", { staticClass: "font-bold text-1xl" }, [
+                    _vm._v("D & N Tour Travel"),
+                  ]),
+                  _vm._v("."),
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "py-6 text-justify font-mono" }, [
+                  _vm._v(
+                    "\n                    Third-party ad servers or ad networks uses technologies\n                    like cookies, JavaScript, or Web Beacons that are used\n                    in their respective advertisements and links that appear\n                    on\n                    "
+                  ),
+                  _c("span", { staticClass: "font-bold text-1xl" }, [
+                    _vm._v("D & N Tour Travel"),
+                  ]),
+                  _vm._v(
+                    ", which are sent directly to users' browser. They\n                    automatically receive your IP address when this occurs.\n                    These technologies are used to measure the effectiveness\n                    of their advertising campaigns and/or to personalize the\n                    advertising content that you see on websites that you\n                    visit.\n                "
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "py-6 text-justify font-mono" }, [
+                  _vm._v(
+                    "\n                    Note that\n                    "
+                  ),
+                  _c("span", { staticClass: "font-bold text-1xl" }, [
+                    _vm._v("D & N Tour Travel"),
+                  ]),
+                  _vm._v(
+                    "\n                    has no access to or control over these cookies that are\n                    used by third-party advertisers.\n                "
+                  ),
+                ]),
+                _vm._v(" "),
+                _c(
+                  "h2",
+                  { staticClass: "font-bold text-2xl font-serif mt-12" },
+                  [
+                    _vm._v(
+                      "\n                    Third Party Privacy Policies\n                "
+                    ),
+                  ]
+                ),
+                _vm._v(" "),
+                _c("p", { staticClass: "py-6 text-justify font-mono" }, [
+                  _c("span", { staticClass: "font-bold text-1xl" }, [
+                    _vm._v("D & N Tour Travel's"),
+                  ]),
+                  _vm._v(
+                    "\n                    Privacy Policy does not apply to other advertisers or\n                    websites. Thus, we are advising you to consult the\n                    respective Privacy Policies of these third-party ad\n                    servers for more detailed information. It may include\n                    their practices and instructions about how to opt-out of\n                    certain options.\n                "
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "py-6 text-justify font-mono" }, [
+                  _vm._v(
+                    "\n                    You can choose to disable cookies through your\n                    individual browser options. To know more detailed\n                    information about cookie management with specific web\n                    browsers, it can be found at the browsers' respective\n                    websites. What Are Cookies?\n                "
+                  ),
+                ]),
+                _vm._v(" "),
+                _c(
+                  "h2",
+                  { staticClass: "font-bold text-2xl font-serif mt-12" },
+                  [
+                    _vm._v(
+                      "\n                    Children's Information\n                "
+                    ),
+                  ]
+                ),
+                _vm._v(" "),
+                _c("p", { staticClass: "py-6 text-justify font-mono" }, [
+                  _vm._v(
+                    "\n                    Another part of our priority is adding protection for\n                    children while using the internet. We encourage parents\n                    and guardians to observe, participate in, and/or monitor\n                    and guide their online activity.\n                "
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "py-6 text-justify font-mono" }, [
+                  _c("span", { staticClass: "font-bold text-1xl" }, [
+                    _vm._v("D & N Tour Travel"),
+                  ]),
+                  _vm._v(
+                    "\n                    does not knowingly collect any Personal Identifiable\n                    Information from children under the age of 13. If you\n                    think that your child provided this kind of information\n                    on our website, we strongly encourage you to contact us\n                    immediately and we will do our best efforts to promptly\n                    remove such information from our records.\n                "
+                  ),
+                ]),
+                _vm._v(" "),
+                _c(
+                  "h2",
+                  { staticClass: "font-bold text-2xl font-serif mt-12" },
+                  [
+                    _vm._v(
+                      "\n                    Online Privacy Policy Only\n                "
+                    ),
+                  ]
+                ),
+                _vm._v(" "),
+                _c("p", { staticClass: "py-6 text-justify font-mono" }, [
+                  _vm._v(
+                    "\n                    This Privacy Policy applies only to our online\n                    activities and is valid for visitors to our website with\n                    regards to the information that they shared and/or\n                    collect in\n                    "
+                  ),
+                  _c("span", { staticClass: "font-bold text-1xl" }, [
+                    _vm._v("D & N Tour Travel"),
+                  ]),
+                  _vm._v(
+                    ". This policy is not applicable to any information\n                    collected offline or via channels other than this\n                    website.\n                "
+                  ),
+                ]),
+                _vm._v(" "),
+                _c(
+                  "h2",
+                  { staticClass: "font-bold text-2xl font-serif mt-12" },
+                  [_vm._v("Consent")]
+                ),
+                _vm._v(" "),
+                _c("p", { staticClass: "py-6 text-justify font-mono" }, [
+                  _vm._v(
+                    "\n                    By using our website, you hereby consent to our Privacy\n                    Policy and agree to its Terms and Conditions.\n                "
+                  ),
+                ]),
+              ],
+              1
+            ),
+          ]
+        ),
+      ]
+    ),
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
