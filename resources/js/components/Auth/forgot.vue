@@ -121,17 +121,28 @@ export default {
                                 );
                                 this.loadingForgot = false;
                             }, 2500);
+                        } else {
+                            this.$swal({
+                                icon: "error",
+                                title: "Oops...",
+                                text: data?.message,
+                            });
+                            setTimeout(() => {
+                                this.user.email = "";
+                                this.loadingForgot = false;
+                            }, 1500);
                         }
                     })
                     .catch((err) => {
-                        if (err.response.data) {
+                        console.log(err.response);
+                        if (err?.response?.data) {
                             this.$swal({
                                 icon: "error",
                                 title: "Oops...",
                                 text: "Something went wrong!",
                             });
                             setTimeout(() => {
-                                this.validation = err.response.data;
+                                this.validation = err?.response?.data;
                                 this.loadingForgot = false;
                             }, 1500);
                         }

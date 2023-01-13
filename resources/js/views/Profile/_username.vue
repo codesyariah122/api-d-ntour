@@ -62,9 +62,10 @@ export default {
     methods: {
         userData() {
             try {
-                if (this.token) {
+                // console.log(this.token);
+                if (this.token.token) {
                     const endPoint = `${this.server_url}/api/user`;
-                    this.axios.defaults.headers.common.Authorization = `Bearer ${this.token?.token}`;
+                    this.axios.defaults.headers.common.Authorization = `Bearer ${this.token.token}`;
                     this.axios
                         .get(endPoint)
                         .then(({ data }) => {

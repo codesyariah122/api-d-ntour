@@ -53,6 +53,7 @@ class UserHelpers
         $admin = User::where('roles', json_encode(['ADMIN']))
             ->where('email', env('MAIL_USERNAME'))
             ->where('status', 'ACTIVE')->first();
+
         return $admin;
     }
 

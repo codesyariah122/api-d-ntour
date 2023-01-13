@@ -8,7 +8,7 @@
                     <div class="md:w-8/12 lg:w-6/12 mb-12 md:mb-12">
                         <img
                             :src="context.hero.image"
-                            class="w-full"
+                            class="w-full rounded-md shadow-md drop-shadow-md"
                             alt="Phone image"
                         />
                     </div>
@@ -16,7 +16,7 @@
                         <center>
                             <img
                                 :src="context.hero.logo"
-                                class="mb-6 w-48"
+                                class="mb-6 w-48 rounded-md"
                                 alt="brand-logo"
                             />
                         </center>

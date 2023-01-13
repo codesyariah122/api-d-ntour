@@ -2758,7 +2758,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       context: (_window = window) === null || _window === void 0 ? void 0 : _window.context,
       activation_id: this.$route.params.token,
-      api_url: "http://localhost:8000/api/v1",
+      api_url: "https://api.store.dntourtravel.com/api/v1",
       user: {},
       username: "",
       loadingUser: null,
@@ -2929,8 +2929,8 @@ __webpack_require__.r(__webpack_exports__);
     var _window;
     return {
       context: (_window = window) === null || _window === void 0 ? void 0 : _window.context,
-      apiToken: "J5EzCAIV71em7uiCEruCxlgQKZOHmviU",
-      api_url: "http://localhost:8000/api/v1",
+      apiToken: "JqbHAfUuY4bJV7GH63xPjQZnaXqQDA6b",
+      api_url: "https://api.store.dntourtravel.com/api/v1",
       loadingForgot: null,
       user: {},
       username: "",
@@ -2974,16 +2974,29 @@ __webpack_require__.r(__webpack_exports__);
               }));
               _this.loadingForgot = false;
             }, 2500);
+          } else {
+            _this.$swal({
+              icon: "error",
+              title: "Oops...",
+              text: data === null || data === void 0 ? void 0 : data.message
+            });
+            setTimeout(function () {
+              _this.user.email = "";
+              _this.loadingForgot = false;
+            }, 1500);
           }
         })["catch"](function (err) {
-          if (err.response.data) {
+          var _err$response;
+          console.log(err.response);
+          if (err !== null && err !== void 0 && (_err$response = err.response) !== null && _err$response !== void 0 && _err$response.data) {
             _this.$swal({
               icon: "error",
               title: "Oops...",
               text: "Something went wrong!"
             });
             setTimeout(function () {
-              _this.validation = err.response.data;
+              var _err$response2;
+              _this.validation = err === null || err === void 0 ? void 0 : (_err$response2 = err.response) === null || _err$response2 === void 0 ? void 0 : _err$response2.data;
               _this.loadingForgot = false;
             }, 1500);
           }
@@ -3111,8 +3124,8 @@ __webpack_require__.r(__webpack_exports__);
     var _window;
     return {
       context: (_window = window) === null || _window === void 0 ? void 0 : _window.context,
-      apiToken: "J5EzCAIV71em7uiCEruCxlgQKZOHmviU",
-      api_url: "http://localhost:8000/api/v1",
+      apiToken: "JqbHAfUuY4bJV7GH63xPjQZnaXqQDA6b",
+      api_url: "https://api.store.dntourtravel.com/api/v1",
       token_reset: this.$route.params.token_reset,
       loadingReset: null,
       form: {},
@@ -3231,7 +3244,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       context: (_window = window) === null || _window === void 0 ? void 0 : _window.context,
       token: this.$route.query.access_token,
-      server_url: "http://localhost:8000",
+      server_url: "https://api.store.dntourtravel.com",
       user: {},
       google_id: ""
     };
@@ -3683,8 +3696,8 @@ __webpack_require__.r(__webpack_exports__);
     var _window;
     return {
       context: (_window = window) === null || _window === void 0 ? void 0 : _window.context,
-      api_url: "http://localhost:8000/api/v1",
-      server_url: "http://localhost:8000",
+      api_url: "https://api.store.dntourtravel.com/api/v1",
+      server_url: "https://api.store.dntourtravel.com",
       form: {},
       remember_me: false,
       loginLoading: null,
@@ -3692,7 +3705,7 @@ __webpack_require__.r(__webpack_exports__);
       name: "",
       userName: "",
       roles: "",
-      apiToken: "J5EzCAIV71em7uiCEruCxlgQKZOHmviU",
+      apiToken: "JqbHAfUuY4bJV7GH63xPjQZnaXqQDA6b",
       showing: false,
       validation: []
     };
@@ -3965,8 +3978,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       token: (0,_helpers__WEBPACK_IMPORTED_MODULE_0__.getToken)("token"),
       role: this.$route.params.role,
-      server_url: "http://localhost:8000",
-      api_url: "http://localhost:8000/api/v1",
+      server_url: "https://api.store.dntourtravel.com",
+      api_url: "https://api.store.dntourtravel.com/api/v1",
       user: {},
       userId: null
     };
@@ -3985,8 +3998,8 @@ __webpack_require__.r(__webpack_exports__);
           this.axios.get(endPoint).then(function (_ref) {
             var _data$data;
             var data = _ref.data;
-            _this.user = data === null || data === void 0 ? void 0 : data.data;
-            _this.userId = data === null || data === void 0 ? void 0 : (_data$data = data.data) === null || _data$data === void 0 ? void 0 : _data$data.id;
+            _this.user = data.data;
+            _this.userId = (_data$data = data.data) === null || _data$data === void 0 ? void 0 : _data$data.id;
           })["catch"](function (err) {
             return console.log(err.message);
           });
@@ -4126,8 +4139,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       token: (0,_helpers__WEBPACK_IMPORTED_MODULE_0__.getToken)("token"),
       role: this.$route.params.role,
-      server_url: "http://localhost:8000",
-      api_url: "http://localhost:8000/api/v1",
+      server_url: "https://api.store.dntourtravel.com",
+      api_url: "https://api.store.dntourtravel.com/api/v1",
       user: {},
       username: "",
       userId: null,
@@ -4141,10 +4154,10 @@ __webpack_require__.r(__webpack_exports__);
     userData: function userData() {
       var _this = this;
       try {
-        if (this.token) {
-          var _this$token;
+        // console.log(this.token);
+        if (this.token.token) {
           var endPoint = "".concat(this.server_url, "/api/user");
-          this.axios.defaults.headers.common.Authorization = "Bearer ".concat((_this$token = this.token) === null || _this$token === void 0 ? void 0 : _this$token.token);
+          this.axios.defaults.headers.common.Authorization = "Bearer ".concat(this.token.token);
           this.axios.get(endPoint).then(function (_ref) {
             var _data$data2, _data$data3;
             var data = _ref.data;
@@ -31871,7 +31884,7 @@ var render = function () {
           [
             _c("div", { staticClass: "md:w-8/12 lg:w-6/12 mb-12 md:mb-12" }, [
               _c("img", {
-                staticClass: "w-full",
+                staticClass: "w-full rounded-md shadow-md drop-shadow-md",
                 attrs: { src: _vm.context.hero.image, alt: "Phone image" },
               }),
             ]),
@@ -31882,7 +31895,7 @@ var render = function () {
               [
                 _c("center", [
                   _c("img", {
-                    staticClass: "mb-6 w-48",
+                    staticClass: "mb-6 w-48 rounded-md",
                     attrs: { src: _vm.context.hero.logo, alt: "brand-logo" },
                   }),
                 ]),

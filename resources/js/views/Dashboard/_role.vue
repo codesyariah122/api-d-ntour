@@ -64,8 +64,8 @@ export default {
                     this.axios
                         .get(endPoint)
                         .then(({ data }) => {
-                            this.user = data?.data;
-                            this.userId = data?.data?.id;
+                            this.user = data.data;
+                            this.userId = data.data?.id;
                         })
                         .catch((err) => console.log(err.message));
                 }

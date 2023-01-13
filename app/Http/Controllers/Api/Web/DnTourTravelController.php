@@ -101,6 +101,8 @@ class DnTourTravelController extends Controller
         try {
             $env_token = env('DNTOUR_API_TOKEN');
             $api_token = ApiKeys::where('token', $env_token)->first();
+            // var_dump($api_token);
+            // die;
 
             // geo location detector
             $ip_addr = $this->get_helper->getIpAddr();
@@ -112,7 +114,7 @@ class DnTourTravelController extends Controller
             $context_api = [
                 'geo_url' => env('DNTOUR_GEO_API'),
                 'geo_key' => env('DNTOUR_GEO_KEY'),
-                'dntour_token' => $api_token['token']
+                'dntour_token' => $api_token->token
             ];
             $endPoint = "{$this->base_url}?apiKey={$context_api['geo_key']}&ip={$api_auth['ip']}";
 
@@ -156,7 +158,6 @@ class DnTourTravelController extends Controller
             $new_message->save();
 
             $admin = $this->get_helper->adminEmail();
-
             $role = json_decode($admin->roles)[0];
             $details = [
                 'title' => "Pesan baru dari " . env('APP_BRAND'),
