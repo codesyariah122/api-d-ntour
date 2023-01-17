@@ -6,12 +6,15 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Mail;
+use OzdemirBurak\JsonCsv\File\Csv;
 use Illuminate\Http\Request;
+use Storage;
 use App\Helpers\UserHelpers;
 use App\Models\ApiKeys;
 use App\Models\Contact;
 use App\Mail\ContactEmail;
 use App\Mail\ReplyContactEmail;
+use Illuminate\Support\Facades\URL;
 
 class DnTourTravelController extends Controller
 {
@@ -101,10 +104,7 @@ class DnTourTravelController extends Controller
         try {
             $env_token = env('DNTOUR_API_TOKEN');
             $api_token = ApiKeys::where('token', $env_token)->first();
-            // var_dump($api_token);
-            // die;
 
-            // geo location detector
             $ip_addr = $this->get_helper->getIpAddr();
 
             $api_auth = [
@@ -178,6 +178,85 @@ class DnTourTravelController extends Controller
                 'message' => $new_message->name . ' baru saja mengirim pesan',
                 'data' => $new_message
             ], 202);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    public function province()
+    {
+        try {
+            if (env('APP_ENV') === 'local') {
+                $province = json_decode(file_get_contents(public_path() . '\data/province.json'));
+            } else {
+                $province = json_decode(file_get_contents(URL::to('/data/province.json')));
+            }
+
+            $sort = collect($province)->whereIn('name', ['JAWA BARAT', 'DKI JAKARTA', 'JAWA TENGAH', 'DI YOGYAKARTA']);
+
+            return response()->json([
+                'message' => 'List data  province',
+                'data' => $sort
+            ]);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    public function regencies($prov_id)
+    {
+        try {
+            if (env('APP_ENV') === 'local') {
+                $regencies = json_decode(file_get_contents(public_path() . '\data/regencies.json'));
+            } else {
+                $regencies = json_decode(file_get_contents(URL::to('/data/regencies.json')));
+            }
+
+            $regency = collect($regencies)->where('province_id', $prov_id)->values()->all();
+
+            return response()->json([
+                'message' => 'List Regencies',
+                'data' => $regency
+            ]);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    public function district($regency_id)
+    {
+        try {
+            if (env('APP_ENV') === 'local') {
+                $districts = json_decode(file_get_contents(public_path() . '\data/district.json'));
+            } else {
+                $districts = json_decode(file_get_contents(URL::to('/data/district.json')));
+            }
+            $district = collect($districts)->where('regency_id', $regency_id)->values()->all();
+
+            return response()->json([
+                'message' => 'List Districts',
+                'data' => $district
+            ]);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    public function villages($district_id)
+    {
+        try {
+            if (env('APP_ENV') === 'local') {
+                $villages = json_decode(file_get_contents(public_path() . '\data/villages.json'));
+            } else {
+                $villages = json_decode(file_get_contents(URL::to('/data/villages.json')));
+            }
+
+            $village = collect($villages)->where('district_id', $district_id)->values()->all();
+
+            return response()->json([
+                'message' => 'List Villages',
+                'data' => $village
+            ]);
         } catch (\Throwable $th) {
             throw $th;
         }

@@ -2923,6 +2923,94 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -2952,6 +3040,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
       try {
         var _this$user;
+        this.validation = [];
         this.loadingForgot = true;
         var endPoint = "".concat(this.api_url, "/forgot/").concat(this.apiToken);
         var form = new FormData();
@@ -2961,7 +3050,7 @@ __webpack_require__.r(__webpack_exports__);
           if (data !== null && data !== void 0 && data.success) {
             var _data$data, _data$data2, _data$data3, _data$data4, _data$data4$profiles;
             _this.checkPasswordResetData(data === null || data === void 0 ? void 0 : (_data$data = data.data) === null || _data$data === void 0 ? void 0 : _data$data.email);
-            _this.$swal("Halo, ".concat(data === null || data === void 0 ? void 0 : (_data$data2 = data.data) === null || _data$data2 === void 0 ? void 0 : _data$data2.name, " reset was start from your email ").concat(data === null || data === void 0 ? void 0 : (_data$data3 = data.data) === null || _data$data3 === void 0 ? void 0 : _data$data3.email), data === null || data === void 0 ? void 0 : data.message, "success");
+            _this.$swal("Halo, ".concat(data === null || data === void 0 ? void 0 : (_data$data2 = data.data) === null || _data$data2 === void 0 ? void 0 : _data$data2.name, " password reset was send to your email ").concat(data === null || data === void 0 ? void 0 : (_data$data3 = data.data) === null || _data$data3 === void 0 ? void 0 : _data$data3.email), data === null || data === void 0 ? void 0 : data.message, "success");
             data === null || data === void 0 ? void 0 : (_data$data4 = data.data) === null || _data$data4 === void 0 ? void 0 : (_data$data4$profiles = _data$data4.profiles) === null || _data$data4$profiles === void 0 ? void 0 : _data$data4$profiles.map(function (profile) {
               _this.username = profile === null || profile === void 0 ? void 0 : profile.username;
             });
@@ -2987,7 +3076,6 @@ __webpack_require__.r(__webpack_exports__);
           }
         })["catch"](function (err) {
           var _err$response;
-          console.log(err.response);
           if (err !== null && err !== void 0 && (_err$response = err.response) !== null && _err$response !== void 0 && _err$response.data) {
             _this.$swal({
               icon: "error",
@@ -3118,6 +3206,160 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -3128,18 +3370,67 @@ __webpack_require__.r(__webpack_exports__);
       api_url: "http://localhost:8000/api/v1",
       token_reset: this.$route.params.token_reset,
       loadingReset: null,
+      loadingCheck: null,
       form: {},
       user: {},
-      validation: []
+      validation: [],
+      data_reset: {},
+      showing: false,
+      showingConfirm: false
     };
   },
   mounted: function mounted() {
     // console.log(this.token_reset);
+    this.checkTokenResetPassword();
     if (this.token_reset) this.form.token = this.token_reset;
   },
   methods: {
-    updatePassword: function updatePassword() {
+    showPassword: function showPassword(id) {
+      var password = document.querySelector(id);
+      if (id === "#password1") {
+        if (password.type === "password") {
+          password.type = "text";
+          this.showing = true;
+        } else {
+          password.type = "password";
+          this.showing = false;
+        }
+      } else {
+        if (password.type === "password") {
+          password.type = "text";
+          this.showingConfirm = true;
+        } else {
+          password.type = "password";
+          this.showingConfirm = false;
+        }
+      }
+    },
+    checkTokenResetPassword: function checkTokenResetPassword() {
       var _this = this;
+      try {
+        this.loadingCheck = true;
+        var endPoint = "".concat(this.api_url, "/check-reset-token/").concat(this.token_reset);
+        this.axios.get(endPoint).then(function (_ref) {
+          var data = _ref.data;
+          // console.log(data);
+          if (!(data !== null && data !== void 0 && data.valid)) {
+            _this.$swal("Forbidden access", "That thing is still around?", "danger");
+            _this.$router.replace("/");
+          }
+          _this.data_reset = data.token;
+        })["finally"](function () {
+          setTimeout(function () {
+            _this.loadingCheck = false;
+          }, 1500);
+        })["catch"](function (err) {
+          return console.log(err.response);
+        });
+      } catch (err) {
+        console.log(err.message);
+      }
+    },
+    updatePassword: function updatePassword() {
+      var _this2 = this;
       try {
         this.loadingReset = true;
         var endPoint = "".concat(this.api_url, "/reset");
@@ -3152,10 +3443,10 @@ __webpack_require__.r(__webpack_exports__);
         form.append("token", this.form.token);
         form.append("password", this.form.password);
         form.append("password_confirmation", this.form.password_confirmation);
-        this.axios.post(endPoint, form).then(function (_ref) {
-          var data = _ref.data;
+        this.axios.post(endPoint, form).then(function (_ref2) {
+          var data = _ref2.data;
           if (data !== null && data !== void 0 && data.success) {
-            _this.$swal({
+            _this2.$swal({
               position: "top-end",
               icon: "success",
               title: data === null || data === void 0 ? void 0 : data.message,
@@ -3163,34 +3454,34 @@ __webpack_require__.r(__webpack_exports__);
               timer: 2500
             });
             setTimeout(function () {
-              _this.loadingReset = false;
+              _this2.loadingReset = false;
               localStorage.removeItem("reset-password");
-              _this.$router.replace("/auth/login?q=form-reset");
+              _this2.$router.replace("/auth/login?q=form-reset");
             }, 2500);
           } else {
             if (data !== null && data !== void 0 && data.error_token) {
-              _this.$swal({
+              _this2.$swal({
                 icon: "error",
                 title: "Oops...",
                 text: data === null || data === void 0 ? void 0 : data.message
               });
               setTimeout(function () {
-                _this.loadingReset = false;
+                _this2.loadingReset = false;
                 localStorage.getItem("reset-password") ? localStorage.removeItem("reset-password") : "";
-                _this.$router.replace("/auth/login?q=form-reset");
+                _this2.$router.replace("/auth/login?q=form-reset");
               }, 1500);
             }
           }
         })["catch"](function (err) {
           if (err.response.data) {
-            _this.$swal({
+            _this2.$swal({
               icon: "error",
               title: "Oops...",
               text: "Something went wrong!"
             });
             setTimeout(function () {
-              _this.loadingReset = false;
-              _this.validation = err.response.data;
+              _this2.loadingReset = false;
+              _this2.validation = err.response.data;
             }, 1500);
           }
         });
@@ -3685,6 +3976,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -3705,6 +3998,7 @@ __webpack_require__.r(__webpack_exports__);
       userData: {},
       name: "",
       userName: "",
+      googleId: "",
       roles: "",
       apiToken: "J5EzCAIV71em7uiCEruCxlgQKZOHmviU",
       showing: false,
@@ -3808,7 +4102,8 @@ __webpack_require__.r(__webpack_exports__);
           username: _this5.username,
           roles: roles
         }));
-        roles === "admin" ? _this5.$router.push("/dashboard/".concat(roles)) : _this5.$router.push("/profile/".concat(_this5.username));
+        console.log(_this5.googleId);
+        roles === "admin" ? _this5.$router.push("/dashboard/".concat(roles)) : _this5.$router.push("/profile/".concat(_this5.googleId ? _this5.googleId : _this5.username));
       }, 1500);
     },
     login: function login() {
@@ -3830,12 +4125,19 @@ __webpack_require__.r(__webpack_exports__);
               _this6.isActivateAlert(data.message, data.link);
             } else {
               if (!data.success) {
+                if (data.status_reset) {
+                  _this6.isErrorAlert(data.message, false);
+                  setTimeout(function () {
+                    _this6.$router.push("/auth/reset/".concat(data.data.token));
+                  }, 1500);
+                }
                 _this6.isErrorAlert(data.message, false);
               } else {
                 var _data$data3;
                 _this6.isSuccessAlert(data.message, data.data[0], data.token);
-                (_data$data3 = data.data) === null || _data$data3 === void 0 ? void 0 : _data$data3.map(function (u) {
-                  u === null || u === void 0 ? void 0 : u.profiles.map(function (profile) {
+                (_data$data3 = data.data) === null || _data$data3 === void 0 ? void 0 : _data$data3.map(function (user) {
+                  _this6.googleId = user === null || user === void 0 ? void 0 : user.google_id;
+                  user === null || user === void 0 ? void 0 : user.profiles.map(function (profile) {
                     _this6.username = profile.username;
                   });
                 });
@@ -31429,159 +31731,355 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      staticClass:
-        "grid grid-cols-2 place-content-center place-items-center h-screen",
-    },
-    [
-      _c("div", [
-        _c("img", {
-          staticClass: "w-full",
-          attrs: { src: _vm.context.forgot.first_vector, alt: "" },
-        }),
-      ]),
-      _vm._v(" "),
-      _vm.token_reset
-        ? _c("div", [
-            _c(
-              "blockquote",
-              { staticClass: "text-gray-400 font-serif mt-6 mb-6 capitalize" },
-              [
-                _vm._v(
-                  "\n            D & N Tour Travel - Reset Password\n        "
-                ),
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass:
-                  "bg-green-100 rounded-lg py-5 px-6 mb-4 text-base text-green-700",
-                attrs: { role: "alert" },
-              },
-              [
-                _vm._v(
-                  "\n            Your password reset has been send to your email "
-                ),
-                _c("br"),
-                _vm._v("\n            check your inbox\n            "),
+  return _c("div", { staticClass: "container mx-auto" }, [
+    _c("div", { staticClass: "md:hidden block" }, [
+      _c(
+        "div",
+        {
+          staticClass:
+            "grid grid-cols-1 place-content-center place-items-center h-screen",
+        },
+        [
+          _c("div", [
+            _c("img", {
+              staticClass: "w-80",
+              attrs: { src: _vm.context.forgot.first_vector, alt: "" },
+            }),
+          ]),
+          _vm._v(" "),
+          _vm.token_reset
+            ? _c("div", { staticClass: "sm:col-span-1 w-80" }, [
                 _c(
-                  "a",
+                  "blockquote",
                   {
                     staticClass:
-                      "hover:text-blue-700 text-blue-600 cursor-pointer",
+                      "text-gray-400 font-serif mt-6 mb-6 capitalize",
+                  },
+                  [
+                    _vm._v(
+                      "\n                    D & N Tour Travel - Reset Password\n                "
+                    ),
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "bg-green-100 rounded-lg py-5 px-6 mb-4 text-base text-green-700",
+                    attrs: { role: "alert" },
+                  },
+                  [
+                    _vm._v(
+                      "\n                    Your password reset has been send to your email "
+                    ),
+                    _c("br"),
+                    _vm._v(
+                      "\n                    check your inbox\n                    "
+                    ),
+                    _c(
+                      "a",
+                      {
+                        staticClass:
+                          "hover:text-blue-700 text-blue-600 cursor-pointer",
+                        on: {
+                          click: function ($event) {
+                            _vm.checkEmail(_vm.emailDomain(_vm.email_reset))
+                          },
+                        },
+                      },
+                      [_vm._v(_vm._s(_vm.email_reset))]
+                    ),
+                  ]
+                ),
+              ])
+            : _c("div", { staticClass: "sm:col-span-1 w-80" }, [
+                _c(
+                  "h1",
+                  {
+                    staticClass: "text-green-600 text-2xl font-bold font-mono",
+                  },
+                  [
+                    _vm._v(
+                      "\n                    D & N Tour Travel - Reset Password Account\n                "
+                    ),
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "blockquote",
+                  {
+                    staticClass:
+                      "text-gray-400 font-serif mt-6 mb-6 capitalize",
+                  },
+                  [
+                    _vm._v(
+                      "\n                    please fill your email first for reset your password 👇\n                "
+                    ),
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "form",
+                  {
                     on: {
-                      click: function ($event) {
-                        _vm.checkEmail(_vm.emailDomain(_vm.email_reset))
+                      submit: function ($event) {
+                        $event.preventDefault()
+                        return _vm.resetPassword.apply(null, arguments)
                       },
                     },
                   },
-                  [_vm._v(_vm._s(_vm.email_reset))]
-                ),
-              ]
-            ),
-          ])
-        : _c("div", [
-            _c(
-              "h1",
-              { staticClass: "text-green-600 text-2xl font-bold font-mono" },
-              [
-                _vm._v(
-                  "\n            D & N Tour Travel - Reset Password Account\n        "
-                ),
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "blockquote",
-              { staticClass: "text-gray-400 font-serif mt-6 mb-6 capitalize" },
-              [
-                _vm._v(
-                  "\n            please fill your email first for reset your password 👇\n        "
-                ),
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "form",
-              {
-                on: {
-                  submit: function ($event) {
-                    $event.preventDefault()
-                    return _vm.resetPassword.apply(null, arguments)
-                  },
-                },
-              },
-              [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.user.email,
-                      expression: "user.email",
-                    },
-                  ],
-                  staticClass:
-                    "form-control block px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none w-80",
-                  attrs: {
-                    type: "text",
-                    id: "exampleFormControlInput2",
-                    placeholder: "Email address",
-                  },
-                  domProps: { value: _vm.user.email },
-                  on: {
-                    input: function ($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.user, "email", $event.target.value)
-                    },
-                  },
-                }),
-                _vm._v(" "),
-                _vm.validation.email
-                  ? _c("div", [
-                      _c(
-                        "small",
-                        { staticClass: "text-red-600 font-bold font-mono" },
-                        [
-                          _vm._v(
-                            "\n                    " +
-                              _vm._s(_vm.validation.email[0]) +
-                              "\n                "
-                          ),
-                        ]
-                      ),
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass:
-                      "px-4 py-4 mt-6 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out w-80",
-                  },
                   [
-                    _vm.loadingForgot
-                      ? _c(
-                          "div",
-                          { staticClass: "flex justify-center items-center" },
-                          [_vm._m(0)]
-                        )
-                      : _c("span", [_vm._v(" Reset Password ")]),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.user.email,
+                          expression: "user.email",
+                        },
+                      ],
+                      staticClass:
+                        "form-control block px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none w-80",
+                      attrs: {
+                        type: "text",
+                        id: "exampleFormControlInput2",
+                        placeholder: "Email address",
+                      },
+                      domProps: { value: _vm.user.email },
+                      on: {
+                        input: function ($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.user, "email", $event.target.value)
+                        },
+                      },
+                    }),
+                    _vm._v(" "),
+                    _vm.validation.email
+                      ? _c("div", [
+                          _c(
+                            "small",
+                            { staticClass: "text-red-600 font-bold font-mono" },
+                            [
+                              _vm._v(
+                                "\n                            " +
+                                  _vm._s(_vm.validation.email[0]) +
+                                  "\n                        "
+                              ),
+                            ]
+                          ),
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass:
+                          "px-4 py-4 mt-6 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out w-80",
+                      },
+                      [
+                        _vm.loadingForgot
+                          ? _c(
+                              "div",
+                              {
+                                staticClass: "flex justify-center items-center",
+                              },
+                              [_vm._m(0)]
+                            )
+                          : _c("span", [_vm._v(" Reset Password ")]),
+                      ]
+                    ),
                   ]
                 ),
-              ]
-            ),
+              ]),
+        ]
+      ),
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "hidden md:block" }, [
+      _c(
+        "div",
+        {
+          staticClass:
+            "grid grid-cols-2 place-content-center place-items-center h-screen",
+        },
+        [
+          _c("div", [
+            _c("img", {
+              staticClass: "md:w-full max-w-screen-sm",
+              attrs: { src: _vm.context.forgot.first_vector, alt: "" },
+            }),
           ]),
-    ]
-  )
+          _vm._v(" "),
+          _vm.token_reset
+            ? _c("div", [
+                _c(
+                  "blockquote",
+                  {
+                    staticClass:
+                      "text-gray-400 font-serif mt-6 mb-6 capitalize",
+                  },
+                  [
+                    _vm._v(
+                      "\n                    D & N Tour Travel - Reset Password\n                "
+                    ),
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "bg-green-100 rounded-lg py-5 px-6 mb-4 text-base text-green-700",
+                    attrs: { role: "alert" },
+                  },
+                  [
+                    _vm._v(
+                      "\n                    Your password reset has been send to your email "
+                    ),
+                    _c("br"),
+                    _vm._v(
+                      "\n                    check your inbox\n                    "
+                    ),
+                    _c(
+                      "a",
+                      {
+                        staticClass:
+                          "hover:text-blue-700 text-blue-600 cursor-pointer",
+                        on: {
+                          click: function ($event) {
+                            _vm.checkEmail(_vm.emailDomain(_vm.email_reset))
+                          },
+                        },
+                      },
+                      [_vm._v(_vm._s(_vm.email_reset))]
+                    ),
+                  ]
+                ),
+              ])
+            : _c("div", { staticClass: "sm:col-span-12 md:col-span-1" }, [
+                _c(
+                  "h1",
+                  {
+                    staticClass: "text-green-600 text-2xl font-bold font-mono",
+                  },
+                  [
+                    _vm._v(
+                      "\n                    D & N Tour Travel - Reset Password Account\n                "
+                    ),
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "blockquote",
+                  {
+                    staticClass:
+                      "text-gray-400 font-serif mt-6 mb-6 capitalize",
+                  },
+                  [
+                    _vm._v(
+                      "\n                    please fill your email first for reset your password 👇\n                "
+                    ),
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "form",
+                  {
+                    on: {
+                      submit: function ($event) {
+                        $event.preventDefault()
+                        return _vm.resetPassword.apply(null, arguments)
+                      },
+                    },
+                  },
+                  [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.user.email,
+                          expression: "user.email",
+                        },
+                      ],
+                      staticClass:
+                        "form-control block px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none w-80",
+                      attrs: {
+                        type: "text",
+                        id: "exampleFormControlInput2",
+                        placeholder: "Email address",
+                      },
+                      domProps: { value: _vm.user.email },
+                      on: {
+                        input: function ($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.user, "email", $event.target.value)
+                        },
+                      },
+                    }),
+                    _vm._v(" "),
+                    _vm.validation.email
+                      ? _c("div", [
+                          _c(
+                            "small",
+                            { staticClass: "text-red-600 font-bold font-mono" },
+                            [
+                              _vm._v(
+                                "\n                            " +
+                                  _vm._s(_vm.validation.email[0]) +
+                                  "\n                        "
+                              ),
+                            ]
+                          ),
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass:
+                          "px-4 py-4 mt-6 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out w-80",
+                      },
+                      [
+                        _vm.loadingForgot
+                          ? _c(
+                              "div",
+                              {
+                                staticClass: "flex justify-center items-center",
+                              },
+                              [_vm._m(1)]
+                            )
+                          : _c("span", [_vm._v(" Reset Password ")]),
+                      ]
+                    ),
+                  ]
+                ),
+              ]),
+        ]
+      ),
+    ]),
+  ])
 }
 var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass:
+          "spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full",
+        attrs: { role: "status" },
+      },
+      [_c("span", { staticClass: "visually-hidden" }, [_vm._v("Loading...")])]
+    )
+  },
   function () {
     var _vm = this
     var _h = _vm.$createElement
@@ -31619,172 +32117,516 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      staticClass:
-        "grid grid-cols-2 place-content-center place-items-center h-screen",
-    },
-    [
-      _c("div", [
-        _c("img", {
-          staticClass: "w-full",
-          attrs: { src: _vm.context.forgot.second_vector, alt: "" },
-        }),
-      ]),
-      _vm._v(" "),
-      _c("div", [
-        _c(
-          "h1",
-          { staticClass: "text-green-600 text-2xl font-bold font-mono" },
-          [
-            _vm._v(
-              "\n            D & N Tour Travel - Reset Password Account\n        "
-            ),
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "blockquote",
-          { staticClass: "text-gray-400 font-serif mt-6 mb-6 capitalize" },
-          [_vm._v("\n            please fill new password here ! 👇\n        ")]
-        ),
-        _vm._v(" "),
-        _c(
-          "form",
+  return _c("div", [
+    _vm.loadingCheck
+      ? _c(
+          "div",
           {
-            on: {
-              submit: function ($event) {
-                $event.preventDefault()
-                return _vm.updatePassword.apply(null, arguments)
-              },
-            },
+            staticClass:
+              "container mx-auto bg-black dark:bg-black max-w-screen h-screen",
           },
           [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.form.token,
-                  expression: "form.token",
-                },
-              ],
-              attrs: { type: "hidden" },
-              domProps: { value: _vm.form.token },
-              on: {
-                input: function ($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.form, "token", $event.target.value)
-                },
-              },
-            }),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.form.password,
-                  expression: "form.password",
-                },
-              ],
-              staticClass:
-                "form-control block px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none w-80",
-              attrs: {
-                type: "password",
-                id: "exampleFormControlInput2",
-                placeholder: "New Password",
-              },
-              domProps: { value: _vm.form.password },
-              on: {
-                input: function ($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.form, "password", $event.target.value)
-                },
-              },
-            }),
-            _vm._v(" "),
-            _vm.validation.password
-              ? _c(
-                  "div",
-                  _vm._l(_vm.validation.password, function (validate, idx) {
-                    return _c(
-                      "small",
-                      {
-                        key: idx,
-                        staticClass: "text-red-600 font-bold font-mono",
-                      },
-                      [
-                        _vm._v(
-                          "\n                    " + _vm._s(validate) + " "
-                        ),
-                        _c("br"),
-                      ]
-                    )
-                  }),
-                  0
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.form.password_confirmation,
-                  expression: "form.password_confirmation",
-                },
-              ],
-              staticClass:
-                "form-control block px-4 py-2 mt-6 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none w-80",
-              attrs: {
-                type: "password",
-                id: "exampleFormControlInput2",
-                placeholder: "New Password Confirmation",
-              },
-              domProps: { value: _vm.form.password_confirmation },
-              on: {
-                input: function ($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(
-                    _vm.form,
-                    "password_confirmation",
-                    $event.target.value
-                  )
-                },
-              },
-            }),
-            _vm._v(" "),
+            _c("div", { staticClass: "grid grid-cols-1" }, [
+              _c("div", { staticClass: "place-self-center" }, [
+                _c("img", { attrs: { src: _vm.context.gif, alt: "" } }),
+              ]),
+            ]),
+          ]
+        )
+      : _c("div", { staticClass: "container mx-auto" }, [
+          _c("div", { staticClass: "md:hidden block" }, [
             _c(
-              "button",
+              "div",
               {
                 staticClass:
-                  "px-4 py-4 mt-6 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out w-80",
+                  "grid grid-cols-1 place-content-center place-items-center h-screen",
               },
               [
-                _vm.loadingReset
-                  ? _c(
-                      "div",
-                      { staticClass: "flex justify-center items-center" },
-                      [_vm._m(0)]
-                    )
-                  : _c("span", [_vm._v(" Update Password ")]),
+                _c("div", [
+                  _c("img", {
+                    staticClass: "w-80",
+                    attrs: { src: _vm.context.forgot.second_vector, alt: "" },
+                  }),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "sm:col-span-1 w-80" }, [
+                  _c(
+                    "h1",
+                    {
+                      staticClass:
+                        "text-green-600 text-2xl font-bold font-mono",
+                    },
+                    [
+                      _vm._v(
+                        "\n                        D & N Tour Travel - Reset Password Account\n                    "
+                      ),
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("small", { staticClass: "text-pink-500 mb-2" }, [
+                    _vm._v(
+                      "\n                        Reset password for " +
+                        _vm._s(_vm.data_reset.email) +
+                        "\n                    "
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "blockquote",
+                    {
+                      staticClass:
+                        "text-gray-400 font-serif mt-6 mb-6 capitalize",
+                    },
+                    [
+                      _vm._v(
+                        "\n                        please fill new password here ! 👇\n                    "
+                      ),
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "form",
+                    {
+                      on: {
+                        submit: function ($event) {
+                          $event.preventDefault()
+                          return _vm.updatePassword.apply(null, arguments)
+                        },
+                      },
+                    },
+                    [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.form.token,
+                            expression: "form.token",
+                          },
+                        ],
+                        attrs: { type: "hidden" },
+                        domProps: { value: _vm.form.token },
+                        on: {
+                          input: function ($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.form, "token", $event.target.value)
+                          },
+                        },
+                      }),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.form.password,
+                            expression: "form.password",
+                          },
+                        ],
+                        staticClass:
+                          "form-control block px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none w-80",
+                        attrs: {
+                          type: "password",
+                          id: "exampleFormControlInput2",
+                          placeholder: "New Password",
+                        },
+                        domProps: { value: _vm.form.password },
+                        on: {
+                          input: function ($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.form, "password", $event.target.value)
+                          },
+                        },
+                      }),
+                      _vm._v(" "),
+                      _vm.validation.password
+                        ? _c(
+                            "div",
+                            _vm._l(
+                              _vm.validation.password,
+                              function (validate, idx) {
+                                return _c(
+                                  "small",
+                                  {
+                                    key: idx,
+                                    staticClass:
+                                      "text-red-600 font-bold font-mono",
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                " +
+                                        _vm._s(validate) +
+                                        " "
+                                    ),
+                                    _c("br"),
+                                  ]
+                                )
+                              }
+                            ),
+                            0
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.form.password_confirmation,
+                            expression: "form.password_confirmation",
+                          },
+                        ],
+                        staticClass:
+                          "form-control block px-4 py-2 mt-6 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none w-80",
+                        attrs: {
+                          type: "password",
+                          id: "exampleFormControlInput2",
+                          placeholder: "New Password Confirmation",
+                        },
+                        domProps: { value: _vm.form.password_confirmation },
+                        on: {
+                          input: function ($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.form,
+                              "password_confirmation",
+                              $event.target.value
+                            )
+                          },
+                        },
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass:
+                            "px-4 py-4 mt-6 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out w-80",
+                        },
+                        [
+                          _vm.loadingReset
+                            ? _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "flex justify-center items-center",
+                                },
+                                [_vm._m(0)]
+                              )
+                            : _c("span", [_vm._v(" Update Password ")]),
+                        ]
+                      ),
+                    ]
+                  ),
+                ]),
               ]
             ),
-          ]
-        ),
-      ]),
-    ]
-  )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "hidden md:block" }, [
+            _c(
+              "div",
+              {
+                staticClass:
+                  "grid grid-cols-2 place-content-center place-items-center h-screen",
+              },
+              [
+                _c("div", [
+                  _c("img", {
+                    staticClass: "w-full",
+                    attrs: { src: _vm.context.forgot.second_vector, alt: "" },
+                  }),
+                ]),
+                _vm._v(" "),
+                _c("div", [
+                  _c(
+                    "h1",
+                    {
+                      staticClass:
+                        "text-green-600 text-2xl font-bold font-mono",
+                    },
+                    [
+                      _vm._v(
+                        "\n                        D & N Tour Travel - Reset Password Account\n                    "
+                      ),
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("small", { staticClass: "text-pink-500 mb-2" }, [
+                    _vm._v(
+                      "\n                        Reset password for " +
+                        _vm._s(_vm.data_reset.email) +
+                        "\n                    "
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "blockquote",
+                    {
+                      staticClass:
+                        "text-gray-400 font-serif mt-6 mb-6 capitalize",
+                    },
+                    [
+                      _vm._v(
+                        "\n                        please fill new password here ! 👇\n                    "
+                      ),
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "form",
+                    {
+                      on: {
+                        submit: function ($event) {
+                          $event.preventDefault()
+                          return _vm.updatePassword.apply(null, arguments)
+                        },
+                      },
+                    },
+                    [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.form.token,
+                            expression: "form.token",
+                          },
+                        ],
+                        attrs: { type: "hidden" },
+                        domProps: { value: _vm.form.token },
+                        on: {
+                          input: function ($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.form, "token", $event.target.value)
+                          },
+                        },
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "flex justify-center border border-solid bg-white bg-clip-padding border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none w-80 mb-6",
+                        },
+                        [
+                          _c("div", { staticClass: "grow h-8 mt-2 md:ml-4" }, [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.form.password,
+                                  expression: "form.password",
+                                },
+                              ],
+                              staticClass:
+                                "form-control text-xl font-normal text-gray-700 border-none focus:outline-none focus:border-0 focus:ring-0 focus:border-transparent",
+                              attrs: {
+                                id: "password1",
+                                type: "password",
+                                placeholder: "New Password",
+                              },
+                              domProps: { value: _vm.form.password },
+                              on: {
+                                input: function ($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.form,
+                                    "password",
+                                    $event.target.value
+                                  )
+                                },
+                              },
+                            }),
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "grow-0 h-10 mt-3 md:mr-4" },
+                            [
+                              _c(
+                                "span",
+                                {
+                                  staticClass: "cursor-pointer",
+                                  on: {
+                                    click: function ($event) {
+                                      return _vm.showPassword("#password1")
+                                    },
+                                  },
+                                },
+                                [
+                                  !_vm.showing
+                                    ? _c("font-awesome-icon", {
+                                        attrs: { icon: "fa-eye fa-lg" },
+                                      })
+                                    : _c("font-awesome-icon", {
+                                        attrs: { icon: "fa-eye-slash fa-lg" },
+                                      }),
+                                ],
+                                1
+                              ),
+                            ]
+                          ),
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _vm.validation.password
+                        ? _c(
+                            "div",
+                            {
+                              staticClass:
+                                "grid grid-cols-1 transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none w-full mb-6",
+                            },
+                            _vm._l(
+                              _vm.validation.password,
+                              function (validate, idx) {
+                                return _c(
+                                  "small",
+                                  {
+                                    key: idx,
+                                    staticClass:
+                                      "place-self-center text-red-600 font-bold font-mono",
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                " +
+                                        _vm._s(validate) +
+                                        " "
+                                    ),
+                                    _c("br"),
+                                  ]
+                                )
+                              }
+                            ),
+                            0
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "flex justify-center border border-solid bg-white bg-clip-padding border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none w-80 mb-6",
+                        },
+                        [
+                          _c("div", { staticClass: "grow h-8 mt-2 md:ml-4" }, [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.form.password_confirmation,
+                                  expression: "form.password_confirmation",
+                                },
+                              ],
+                              staticClass:
+                                "form-control text-xl font-normal text-gray-700 border-none focus:outline-none focus:border-0 focus:ring-0 focus:border-transparent",
+                              attrs: {
+                                id: "password2",
+                                type: "password",
+                                placeholder: "New Password Confirmation",
+                              },
+                              domProps: {
+                                value: _vm.form.password_confirmation,
+                              },
+                              on: {
+                                input: function ($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.form,
+                                    "password_confirmation",
+                                    $event.target.value
+                                  )
+                                },
+                              },
+                            }),
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "grow-0 h-10 mt-3 md:mr-4" },
+                            [
+                              _c(
+                                "span",
+                                {
+                                  staticClass: "cursor-pointer",
+                                  on: {
+                                    click: function ($event) {
+                                      return _vm.showPassword("#password2")
+                                    },
+                                  },
+                                },
+                                [
+                                  !_vm.showingConfirm
+                                    ? _c("font-awesome-icon", {
+                                        attrs: { icon: "fa-eye fa-lg" },
+                                      })
+                                    : _c("font-awesome-icon", {
+                                        attrs: { icon: "fa-eye-slash fa-lg" },
+                                      }),
+                                ],
+                                1
+                              ),
+                            ]
+                          ),
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass:
+                            "px-4 py-4 mt-6 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out w-80",
+                        },
+                        [
+                          _vm.loadingReset
+                            ? _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "flex justify-center items-center",
+                                },
+                                [_vm._m(1)]
+                              )
+                            : _c("span", [_vm._v(" Update Password ")]),
+                        ]
+                      ),
+                    ]
+                  ),
+                ]),
+              ]
+            ),
+          ]),
+        ]),
+  ])
 }
 var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass:
+          "spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full",
+        attrs: { role: "status" },
+      },
+      [_c("span", { staticClass: "visually-hidden" }, [_vm._v("Loading...")])]
+    )
+  },
   function () {
     var _vm = this
     var _h = _vm.$createElement
@@ -32240,12 +33082,19 @@ var render = function () {
               "flex justify-center items-center flex-wrap h-full g-6 text-gray-800",
           },
           [
-            _c("div", { staticClass: "md:w-8/12 lg:w-6/12 mb-12 md:mb-12" }, [
-              _c("img", {
-                staticClass: "w-full rounded-md shadow-md drop-shadow-md",
-                attrs: { src: _vm.context.hero.image, alt: "Phone image" },
-              }),
-            ]),
+            _c(
+              "div",
+              {
+                staticClass:
+                  "md:w-8/12 lg:w-6/12 md:mb-12 md:mt-0 mt-12 sm:mb-16",
+              },
+              [
+                _c("img", {
+                  staticClass: "w-full rounded-md shadow-md drop-shadow-md",
+                  attrs: { src: _vm.context.hero.image, alt: "Phone image" },
+                }),
+              ]
+            ),
             _vm._v(" "),
             _c(
               "div",
@@ -32334,7 +33183,7 @@ var render = function () {
                                   },
                                 ],
                                 staticClass:
-                                  "form-control text-xl font-normal text-gray-700 border-none focus:outline-none focus:border-0 focus:ring-0 focus:border-transparent",
+                                  "form-control text-xl font-normal text-gray-700 border-none focus:outline-none focus:border-0 focus:ring-0 focus:border-transparent w-full",
                                 attrs: {
                                   id: "password",
                                   type: "password",

@@ -5,7 +5,9 @@
                 <div
                     class="flex justify-center items-center flex-wrap h-full g-6 text-gray-800"
                 >
-                    <div class="md:w-8/12 lg:w-6/12 mb-12 md:mb-12">
+                    <div
+                        class="md:w-8/12 lg:w-6/12 md:mb-12 md:mt-0 mt-12 sm:mb-16"
+                    >
                         <img
                             :src="context.hero.image"
                             class="w-full rounded-md shadow-md drop-shadow-md"
@@ -47,7 +49,7 @@
                                         <input
                                             id="password"
                                             type="password"
-                                            class="form-control text-xl font-normal text-gray-700 border-none focus:outline-none focus:border-0 focus:ring-0 focus:border-transparent"
+                                            class="form-control text-xl font-normal text-gray-700 border-none focus:outline-none focus:border-0 focus:ring-0 focus:border-transparent w-full"
                                             placeholder="Password"
                                             v-model="form.password"
                                         />
@@ -156,6 +158,7 @@ export default {
             userData: {},
             name: "",
             userName: "",
+            googleId: "",
             roles: "",
             apiToken: process.env.MIX_API_TOKEN,
             showing: false,
@@ -269,10 +272,14 @@ export default {
                         roles: roles,
                     })
                 );
-
+                console.log(this.googleId);
                 roles === "admin"
                     ? this.$router.push(`/dashboard/${roles}`)
-                    : this.$router.push(`/profile/${this.username}`);
+                    : this.$router.push(
+                          `/profile/${
+                              this.googleId ? this.googleId : this.username
+                          }`
+                      );
             }, 1500);
         },
         login() {
@@ -293,6 +300,14 @@ export default {
                                 this.isActivateAlert(data.message, data.link);
                             } else {
                                 if (!data.success) {
+                                    if (data.status_reset) {
+                                        this.isErrorAlert(data.message, false);
+                                        setTimeout(() => {
+                                            this.$router.push(
+                                                `/auth/reset/${data.data.token}`
+                                            );
+                                        }, 1500);
+                                    }
                                     this.isErrorAlert(data.message, false);
                                 } else {
                                     this.isSuccessAlert(
@@ -300,8 +315,9 @@ export default {
                                         data.data[0],
                                         data.token
                                     );
-                                    data.data?.map((u) => {
-                                        u?.profiles.map((profile) => {
+                                    data.data?.map((user) => {
+                                        this.googleId = user?.google_id;
+                                        user?.profiles.map((profile) => {
                                             this.username = profile.username;
                                         });
                                     });

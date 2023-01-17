@@ -25,6 +25,7 @@ class HomePageController extends Controller
                 'og_image_height' => '590'
             ],
             'brand' => env('APP_BRAND'),
+            'gif' => asset('gif/loader.gif'),
             'hero' => [
                 'logo' => asset('images/web-asset/logo/D_N-Logo.png'),
                 'image' => asset('images/web-asset/artwork-store.jpg'),
@@ -46,7 +47,8 @@ class HomePageController extends Controller
             'privacy' => [
                 'first_vector' => asset('images/web-asset/new-hero-mobile2.jpg'),
                 'second_vector' => asset('images/web-asset/parallax-mobile.jpg')
-            ]
+            ],
+
         ];
         return view('home.app', $context)->with('context', $context);
     }

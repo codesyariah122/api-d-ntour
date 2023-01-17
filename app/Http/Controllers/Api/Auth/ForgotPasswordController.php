@@ -21,9 +21,27 @@ use App\Helpers\UserHelpers;
 class ForgotPasswordController extends Controller
 {
     private $helper;
+
     public function __construct()
     {
         $this->helper = new UserHelpers;
+    }
+
+    public function checkTokenReset($token)
+    {
+        $token = PasswordReset::whereToken($token)->first();
+        if (!$token) {
+            return response()->json([
+                'valid' => false,
+                'message' => 'Your token reset is not valid'
+            ]);
+        }
+
+        return response()->json([
+            'valid' => true,
+            'message' => 'Your token is valid',
+            'token' => $token
+        ]);
     }
 
     public function forgot(Request $request, $apiToken)

@@ -11,6 +11,7 @@ use Laravel\Passport\Passport;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use App\Models\User;
+use App\Models\PasswordReset;
 use App\Helpers\UserHelpers;
 
 class LoginController extends Controller
@@ -76,6 +77,16 @@ class LoginController extends Controller
                                 'is_login' => true,
                                 'message' => "Sorry, this account is already login at {$last_login}",
                                 'quote' => 'Please check the notification again!'
+                            ]);
+                        }
+
+                        $checkUserIfReset = PasswordReset::whereEmail($user->email)->first();
+
+                        if ($checkUserIfReset) {
+                            return response()->json([
+                                'status_reset' => 'Active',
+                                'message' => 'Password reset process is in progress, please proceed to reset password',
+                                'data' => $checkUserIfReset
                             ]);
                         }
 

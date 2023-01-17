@@ -14,7 +14,9 @@
         "laravel/socialite": "^5.5",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.4",
-        "pusher/pusher-php-server": "^7.2"
+        "ozdemirburak/json-csv": "^0.4.0",
+        "pusher/pusher-php-server": "^7.2",
+        "ramsey/uuid": "^4.7"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
