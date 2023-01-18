@@ -51,4 +51,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Models\UserActivation');
     }
+
+    public function logins()
+    {
+        return $this->belongsToMany('App\Models\Login');
+    }
 }

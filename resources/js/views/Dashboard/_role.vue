@@ -42,12 +42,18 @@ import { getToken } from "../../helpers";
 export default {
     data() {
         return {
+            app_env: process.env.MIX_APP_ENV,
+            server_url: process.env.MIX_APP_URL,
+            api_url: process.env.MIX_API_URL,
+            public_api: process.env.MIX_API_PUBLIC,
+            server_url_public: process.env.MIX_APP_PUBLIC,
             token: getToken("token"),
             role: this.$route.params.role,
-            server_url: process.env.MIX_SERVER_URL,
-            api_url: process.env.MIX_API_URL,
+            token: getToken("token"),
             user: {},
+            username: "",
             userId: null,
+            googleId: null,
         };
     },
 
@@ -58,16 +64,24 @@ export default {
     methods: {
         userData() {
             try {
-                if (this.token) {
-                    const endPoint = `${this.server_url}/api/user`;
-                    this.axios.defaults.headers.common.Authorization = `Bearer ${this.token?.token}`;
+                if (this.token.token) {
+                    const endPoint = `${
+                        this.app_env === "local"
+                            ? this.api_url
+                            : this.public_api
+                    }/fitur/user-login`;
+                    this.axios.defaults.headers.common.Authorization = `Bearer ${this.token.token}`;
                     this.axios
                         .get(endPoint)
                         .then(({ data }) => {
+                            if (data.data.google_id) {
+                                this.googleId = data.data.google_id;
+                            }
                             this.user = data.data;
-                            this.userId = data.data?.id;
+                            this.username = data.data.profiles[0].username;
+                            this.userId = data.data.id;
                         })
-                        .catch((err) => console.log(err.message));
+                        .catch((err) => console.log(err.response));
                 }
             } catch (err) {
                 console.log(err.message);

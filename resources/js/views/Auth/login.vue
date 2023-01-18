@@ -171,7 +171,6 @@ export default {
 
     mounted() {
         this.isLogin();
-        console.log(this.server_url_public);
     },
 
     methods: {
@@ -192,19 +191,27 @@ export default {
                     : null;
                 const endPoint = `${
                     this.app_env === "local" ? this.api_url : this.public_api
-                }/api/user`;
+                }/fitur/user-login`;
                 this.axios.defaults.headers.common.Authorization = `Bearer ${token.token}`;
                 this.axios
                     .get(endPoint)
                     .then(({ data }) => {
-                        const roles = getRoles(data?.data?.roles);
+                        const roles = getRoles(data.data.roles);
                         if (data?.data?.is_login || token) {
                             this.isLoginAlert(
                                 `You are is login as a ${roles} Roles`,
                                 roles
                             );
                             setTimeout(() => {
-                                this.$router.push(`/dashboard/${roles}`);
+                                if (roles === "customer") {
+                                    this.$router.push(
+                                        `/profile/${data?.data?.profiles[0]?.username}`
+                                    );
+                                } else {
+                                    this.$router.push(
+                                        `/dashboard/${data?.data?.profiles[0]?.username}`
+                                    );
+                                }
                             }, 2500);
                         }
                     })
@@ -301,6 +308,7 @@ export default {
                         remember_me: this.remember_me,
                     })
                     .then(({ data }) => {
+                        console.log(data);
                         if (data.not_found) {
                             this.isNotFoundAlert(data.message);
                         } else {
@@ -321,7 +329,7 @@ export default {
                                     this.isSuccessAlert(
                                         data.message,
                                         data.data[0],
-                                        data.token
+                                        data.data[0].logins[0].user_token_login
                                     );
                                     data.data?.map((user) => {
                                         this.googleId = user?.google_id;

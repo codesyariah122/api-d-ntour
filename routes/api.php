@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 namespace App\Http\Controllers\Api\Auth;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Api\Web\DnTourTravelController;
 use App\Http\Controllers\Api\Fitur\ShelterController;
 use App\Http\Controllers\Api\Fitur\DistrictController;
@@ -41,6 +42,10 @@ Route::middleware('auth:api')->prefix('v1/fitur')->group(function () {
     Route::resource('shelter', ShelterController::class);
     Route::resource('district', DistrictController::class);
 });
+
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 // Authentication route
 Route::prefix('v1/auth')->group(function () {

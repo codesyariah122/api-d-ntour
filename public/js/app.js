@@ -3020,7 +3020,7 @@ __webpack_require__.r(__webpack_exports__);
       app_env: "local",
       public_api: "https://api.store.dntourtravel.com/api/v1",
       server_url_public: "https://api.store.dntourtravel.com",
-      apiToken: "J5EzCAIV71em7uiCEruCxlgQKZOHmviU",
+      apiToken: "Bl67KKROnmRE4qMOF4woNujchBdkXJD6",
       api_url: "http://localhost:8000/api/v1",
       loadingForgot: null,
       user: {},
@@ -3374,7 +3374,7 @@ __webpack_require__.r(__webpack_exports__);
       public_api: "https://api.store.dntourtravel.com/api/v1",
       server_url_public: "https://api.store.dntourtravel.com",
       api_url: "http://localhost:8000/api/v1",
-      apiToken: "J5EzCAIV71em7uiCEruCxlgQKZOHmviU",
+      apiToken: "Bl67KKROnmRE4qMOF4woNujchBdkXJD6",
       loadingReset: null,
       loadingCheck: null,
       form: {},
@@ -4049,14 +4049,13 @@ __webpack_require__.r(__webpack_exports__);
       userName: "",
       googleId: "",
       roles: "",
-      apiToken: "J5EzCAIV71em7uiCEruCxlgQKZOHmviU",
+      apiToken: "Bl67KKROnmRE4qMOF4woNujchBdkXJD6",
       showing: false,
       validation: []
     };
   },
   mounted: function mounted() {
     this.isLogin();
-    console.log(this.server_url_public);
   },
   methods: {
     showPassword: function showPassword() {
@@ -4073,16 +4072,22 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
       try {
         var token = localStorage.getItem("token") ? JSON.parse(localStorage.getItem("token")) : null;
-        var endPoint = "".concat(this.app_env === "local" ? this.api_url : this.public_api, "/api/user");
+        var endPoint = "".concat(this.app_env === "local" ? this.api_url : this.public_api, "/fitur/user-login");
         this.axios.defaults.headers.common.Authorization = "Bearer ".concat(token.token);
         this.axios.get(endPoint).then(function (_ref) {
-          var _data$data, _data$data2;
+          var _data$data;
           var data = _ref.data;
-          var roles = (0,_helpers_js__WEBPACK_IMPORTED_MODULE_1__.getRoles)(data === null || data === void 0 ? void 0 : (_data$data = data.data) === null || _data$data === void 0 ? void 0 : _data$data.roles);
-          if (data !== null && data !== void 0 && (_data$data2 = data.data) !== null && _data$data2 !== void 0 && _data$data2.is_login || token) {
+          var roles = (0,_helpers_js__WEBPACK_IMPORTED_MODULE_1__.getRoles)(data.data.roles);
+          if (data !== null && data !== void 0 && (_data$data = data.data) !== null && _data$data !== void 0 && _data$data.is_login || token) {
             _this.isLoginAlert("You are is login as a ".concat(roles, " Roles"), roles);
             setTimeout(function () {
-              _this.$router.push("/dashboard/".concat(roles));
+              if (roles === "customer") {
+                var _data$data2, _data$data2$profiles$;
+                _this.$router.push("/profile/".concat(data === null || data === void 0 ? void 0 : (_data$data2 = data.data) === null || _data$data2 === void 0 ? void 0 : (_data$data2$profiles$ = _data$data2.profiles[0]) === null || _data$data2$profiles$ === void 0 ? void 0 : _data$data2$profiles$.username));
+              } else {
+                var _data$data3, _data$data3$profiles$;
+                _this.$router.push("/dashboard/".concat(data === null || data === void 0 ? void 0 : (_data$data3 = data.data) === null || _data$data3 === void 0 ? void 0 : (_data$data3$profiles$ = _data$data3.profiles[0]) === null || _data$data3$profiles$ === void 0 ? void 0 : _data$data3$profiles$.username));
+              }
             }, 2500);
           }
         })["catch"](function (err) {
@@ -4168,6 +4173,7 @@ __webpack_require__.r(__webpack_exports__);
           remember_me: this.remember_me
         }).then(function (_ref2) {
           var data = _ref2.data;
+          console.log(data);
           if (data.not_found) {
             _this6.isNotFoundAlert(data.message);
           } else {
@@ -4183,9 +4189,9 @@ __webpack_require__.r(__webpack_exports__);
                 }
                 _this6.isErrorAlert(data.message, false);
               } else {
-                var _data$data3;
-                _this6.isSuccessAlert(data.message, data.data[0], data.token);
-                (_data$data3 = data.data) === null || _data$data3 === void 0 ? void 0 : _data$data3.map(function (user) {
+                var _data$data4;
+                _this6.isSuccessAlert(data.message, data.data[0], data.data[0].logins[0].user_token_login);
+                (_data$data4 = data.data) === null || _data$data4 === void 0 ? void 0 : _data$data4.map(function (user) {
                   _this6.googleId = user === null || user === void 0 ? void 0 : user.google_id;
                   user === null || user === void 0 ? void 0 : user.profiles.map(function (profile) {
                     _this6.username = profile.username;
@@ -4286,7 +4292,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../helpers */ "./resources/js/helpers.js");
-/* provided dependency */ var process = __webpack_require__(/*! process/browser.js */ "./node_modules/process/browser.js");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 //
 //
 //
@@ -4329,14 +4338,16 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
-    return {
-      token: (0,_helpers__WEBPACK_IMPORTED_MODULE_0__.getToken)("token"),
-      role: this.$route.params.role,
-      server_url: process.env.MIX_SERVER_URL,
+    var _ref;
+    return _ref = {
+      app_env: "local",
+      server_url: "http://localhost:8000",
       api_url: "http://localhost:8000/api/v1",
-      user: {},
-      userId: null
-    };
+      public_api: "https://api.store.dntourtravel.com/api/v1",
+      server_url_public: "https://api.store.dntourtravel.com",
+      token: (0,_helpers__WEBPACK_IMPORTED_MODULE_0__.getToken)("token"),
+      role: this.$route.params.role
+    }, _defineProperty(_ref, "token", (0,_helpers__WEBPACK_IMPORTED_MODULE_0__.getToken)("token")), _defineProperty(_ref, "user", {}), _defineProperty(_ref, "username", ""), _defineProperty(_ref, "userId", null), _defineProperty(_ref, "googleId", null), _ref;
   },
   mounted: function mounted() {
     this.userData();
@@ -4345,17 +4356,19 @@ __webpack_require__.r(__webpack_exports__);
     userData: function userData() {
       var _this = this;
       try {
-        if (this.token) {
-          var _this$token;
-          var endPoint = "".concat(this.server_url, "/api/user");
-          this.axios.defaults.headers.common.Authorization = "Bearer ".concat((_this$token = this.token) === null || _this$token === void 0 ? void 0 : _this$token.token);
-          this.axios.get(endPoint).then(function (_ref) {
-            var _data$data;
-            var data = _ref.data;
+        if (this.token.token) {
+          var endPoint = "".concat(this.app_env === "local" ? this.api_url : this.public_api, "/fitur/user-login");
+          this.axios.defaults.headers.common.Authorization = "Bearer ".concat(this.token.token);
+          this.axios.get(endPoint).then(function (_ref2) {
+            var data = _ref2.data;
+            if (data.data.google_id) {
+              _this.googleId = data.data.google_id;
+            }
             _this.user = data.data;
-            _this.userId = (_data$data = data.data) === null || _data$data === void 0 ? void 0 : _data$data.id;
+            _this.username = data.data.profiles[0].username;
+            _this.userId = data.data.id;
           })["catch"](function (err) {
-            return console.log(err.message);
+            return console.log(err.response);
           });
         }
       } catch (err) {
@@ -4379,11 +4392,11 @@ __webpack_require__.r(__webpack_exports__);
             var _this2$token;
             var endPoint = "".concat(_this2.api_url, "/auth/logout");
             _this2.axios.defaults.headers.common.Authorization = "Bearer ".concat((_this2$token = _this2.token) === null || _this2$token === void 0 ? void 0 : _this2$token.token);
-            _this2.axios.post(endPoint).then(function (_ref2) {
-              var data = _ref2.data;
+            _this2.axios.post(endPoint).then(function (_ref3) {
+              var data = _ref3.data;
               if (data.success) {
-                var _data$data2;
-                _this2.$swal("Your exit from ".concat(data === null || data === void 0 ? void 0 : (_data$data2 = data.data) === null || _data$data2 === void 0 ? void 0 : _data$data2.name, " profile !"), data === null || data === void 0 ? void 0 : data.message, "success");
+                var _data$data;
+                _this2.$swal("Your exit from ".concat(data === null || data === void 0 ? void 0 : (_data$data = data.data) === null || _data$data === void 0 ? void 0 : _data$data.name, " profile !"), data === null || data === void 0 ? void 0 : data.message, "success");
                 localStorage.removeItem("token");
                 localStorage.removeItem("user-roles");
                 _this2.$router.push("/");
@@ -4771,12 +4784,12 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       app_env: "local",
+      server_url: "http://localhost:8000",
+      api_url: "http://localhost:8000/api/v1",
       public_api: "https://api.store.dntourtravel.com/api/v1",
       server_url_public: "https://api.store.dntourtravel.com",
       token: (0,_helpers__WEBPACK_IMPORTED_MODULE_0__.getToken)("token"),
       role: this.$route.params.role,
-      server_url: "http://localhost:8000",
-      api_url: "http://localhost:8000/api/v1",
       user: {},
       username: "",
       userId: null,
@@ -4791,19 +4804,18 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
       try {
         if (this.token.token) {
-          var endPoint = "".concat(this.app_env === "local" ? this.server_url : this.server_url_public, "/api/user");
+          var endPoint = "".concat(this.app_env === "local" ? this.api_url : this.public_api, "/fitur/user-login");
           this.axios.defaults.headers.common.Authorization = "Bearer ".concat(this.token.token);
           this.axios.get(endPoint).then(function (_ref) {
-            var _data$data, _data$data2;
             var data = _ref.data;
             if (data.data.google_id) {
               _this.googleId = data.data.google_id;
             }
-            _this.user = data === null || data === void 0 ? void 0 : data.data;
-            _this.username = data === null || data === void 0 ? void 0 : (_data$data = data.data) === null || _data$data === void 0 ? void 0 : _data$data.profiles[0].username;
-            _this.userId = data === null || data === void 0 ? void 0 : (_data$data2 = data.data) === null || _data$data2 === void 0 ? void 0 : _data$data2.id;
+            _this.user = data.data;
+            _this.username = data.data.profiles[0].username;
+            _this.userId = data.data.id;
           })["catch"](function (err) {
-            return console.log(err.message);
+            return console.log(err.response);
           });
         }
       } catch (err) {
@@ -4830,8 +4842,8 @@ __webpack_require__.r(__webpack_exports__);
             _this2.axios.post(endPoint).then(function (_ref2) {
               var data = _ref2.data;
               if (data.success) {
-                var _data$data3;
-                _this2.$swal("Your exit from ".concat(data === null || data === void 0 ? void 0 : (_data$data3 = data.data) === null || _data$data3 === void 0 ? void 0 : _data$data3.name, " profile !"), data === null || data === void 0 ? void 0 : data.message, "success");
+                var _data$data;
+                _this2.$swal("Your exit from ".concat(data === null || data === void 0 ? void 0 : (_data$data = data.data) === null || _data$data === void 0 ? void 0 : _data$data.name, " profile !"), data === null || data === void 0 ? void 0 : data.message, "success");
                 localStorage.removeItem("token");
                 localStorage.removeItem("user-roles");
                 _this2.$router.replace("/");

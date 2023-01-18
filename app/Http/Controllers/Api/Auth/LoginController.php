@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
 use App\Models\User;
 use App\Models\PasswordReset;
 use App\Helpers\UserHelpers;
+use App\Models\Login;
 
 class LoginController extends Controller
 {
@@ -101,15 +102,26 @@ class LoginController extends Controller
                         $user_login->last_login = $current;
                         $user_login->remember_token = Str::random(32);
                         $user_login->save();
+                        $user_id = $user_login->id;
+                        $logins = new Login;
+                        $logins->user_id = $user_id;
+                        $logins->user_token_login = $token;
+                        $logins->save();
+                        $login_id = $logins->id;
 
-                        $userIsLogin = User::whereId($user_login->id)->with('profiles')->get();
+                        // sync pivot table
+                        $user->logins()->sync($login_id);
+
+                        $userIsLogin = User::whereId($user_login->id)
+                            ->with('profiles')
+                            ->with('logins')
+                            ->get();
 
                         return response()->json([
                             'success' => true,
                             'message' => 'Login Success!',
                             'data'    => $userIsLogin,
-                            'remember_token' => $user_login->remember_token,
-                            'token'   => $token
+                            'remember_token' => $user_login->remember_token
                         ]);
                     }
                 endif;
@@ -134,7 +146,10 @@ class LoginController extends Controller
             $user->remember_token = null;
             $user->save();
 
+
             $removeToken = $request->user()->tokens()->delete();
+            $delete_login = Login::whereUserId($user->id);
+            $delete_login->delete();
 
             if ($removeToken) {
                 return response()->json([
@@ -151,11 +166,20 @@ class LoginController extends Controller
     public function userIsLogin()
     {
         try {
-            $user = User::whereIsLogin(1)->with('profiles')->first();
+            $user = User::whereIsLogin(1)
+                ->with('profiles')
+                ->with('logins')
+                ->first();
+            if ($user !== NULL) {
+                return response()->json([
+                    'message' => 'User data is login',
+                    'data' => $user
+                ], 200);
+            }
             return response()->json([
-                'message' => 'User data is login',
-                'data' => $user
-            ], 200);
+                'not_login' => true,
+                'message' => 'Anauthenticated'
+            ]);
         } catch (\Throwable $th) {
             throw $th;
         }
