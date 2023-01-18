@@ -218,9 +218,11 @@ export default {
     data() {
         return {
             context: window?.context,
-            apiToken: process.env.MIX_API_TOKEN,
+            app_env: process.env.MIX_APP_ENV,
+            public_api: process.env.MIX_API_PUBLIC,
+            server_url_public: process.env.MIX_APP_PUBLIC,
             api_url: process.env.MIX_API_URL,
-            token_reset: this.$route.params.token_reset,
+            apiToken: process.env.MIX_API_TOKEN,
             loadingReset: null,
             loadingCheck: null,
             form: {},
@@ -229,11 +231,11 @@ export default {
             data_reset: {},
             showing: false,
             showingConfirm: false,
+            token_reset: this.$route.params.token_reset,
         };
     },
 
     mounted() {
-        // console.log(this.token_reset);
         this.checkTokenResetPassword();
         if (this.token_reset) this.form.token = this.token_reset;
     },
@@ -262,11 +264,14 @@ export default {
         checkTokenResetPassword() {
             try {
                 this.loadingCheck = true;
-                const endPoint = `${this.api_url}/check-reset-token/${this.token_reset}`;
+                const endPoint = `${
+                    this.app_env === "local" ? this.api_url : this.public_api
+                }/check-reset-token/${this.token_reset}`;
+                console.log(endPoint);
                 this.axios
                     .get(endPoint)
                     .then(({ data }) => {
-                        // console.log(data);
+                        console.log(data);
                         if (!data?.valid) {
                             this.$swal(
                                 "Forbidden access",
@@ -290,7 +295,9 @@ export default {
         updatePassword() {
             try {
                 this.loadingReset = true;
-                const endPoint = `${this.api_url}/reset`;
+                const endPoint = `${
+                    this.app_env === "local" ? this.api_url : this.public_api
+                }/reset`;
                 const request = {
                     token: this.form.token,
                     password: this.form.password,
@@ -308,6 +315,7 @@ export default {
                 this.axios
                     .post(endPoint, form)
                     .then(({ data }) => {
+                        console.log(data);
                         if (data?.success) {
                             this.$swal({
                                 position: "top-end",

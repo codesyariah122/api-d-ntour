@@ -26,8 +26,12 @@ export default {
     data() {
         return {
             context: window?.context,
+            app_env: process.env.MIX_APP_ENV,
+            public_api: process.env.MIX_API_PUBLIC,
+            server_url_public: process.env.MIX_APP_PUBLIC,
+            server_url: process.env.MIX_APP_URL,
+            api_url: process.env.MIX_API_URL,
             token: this.$route.query.access_token,
-            server_url: process.env.MIX_SERVER_URL,
             user: {},
             google_id: "",
         };
@@ -35,6 +39,7 @@ export default {
 
     mounted() {
         this.checkUserLogin();
+        console.log(this.google_id);
     },
 
     methods: {
@@ -45,7 +50,11 @@ export default {
         checkUserLogin() {
             try {
                 if (this.token) {
-                    const endPoint = `${this.server_url}/api/user`;
+                    const endPoint = `${
+                        this.app_env === "local"
+                            ? this.server_url
+                            : this.server_url_public
+                    }/api/user`;
                     this.axios.defaults.headers.common.Authorization = `Bearer ${this.token}`;
                     this.axios.defaults.headers.common["Content-Type"] =
                         "application/json";
@@ -54,7 +63,8 @@ export default {
                     this.axios
                         .get(endPoint)
                         .then(({ data }) => {
-                            if (data?.data?.google_id) {
+                            // console.log(data);
+                            if (data.data.google_id) {
                                 localStorage.setItem(
                                     "token",
                                     JSON.stringify({ token: this.token })
@@ -70,6 +80,11 @@ export default {
                                 );
                                 this.user = data?.data;
                                 this.google_id = data?.data?.google_id;
+                                setTimeout(() => {
+                                    this.$router.replace(
+                                        `/profile/${data?.data?.google_id}`
+                                    );
+                                }, 5000);
                             }
                         })
                         .catch((err) => console.log(err.message));

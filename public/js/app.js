@@ -3017,6 +3017,9 @@ __webpack_require__.r(__webpack_exports__);
     var _window;
     return {
       context: (_window = window) === null || _window === void 0 ? void 0 : _window.context,
+      app_env: "local",
+      public_api: "https://api.store.dntourtravel.com/api/v1",
+      server_url_public: "https://api.store.dntourtravel.com",
       apiToken: "J5EzCAIV71em7uiCEruCxlgQKZOHmviU",
       api_url: "http://localhost:8000/api/v1",
       loadingForgot: null,
@@ -3027,7 +3030,9 @@ __webpack_require__.r(__webpack_exports__);
       validation: []
     };
   },
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    console.log(this.app_env);
+  },
   methods: {
     emailDomain: function emailDomain(email) {
       var domain = email.split("@");
@@ -3039,12 +3044,12 @@ __webpack_require__.r(__webpack_exports__);
     resetPassword: function resetPassword() {
       var _this = this;
       try {
-        var _this$user;
         this.validation = [];
         this.loadingForgot = true;
-        var endPoint = "".concat(this.api_url, "/forgot/").concat(this.apiToken);
+        var endPoint = "".concat(this.app_env === "local" ? this.api_url : this.public_api, "/forgot/").concat(this.apiToken);
+        console.log(endPoint);
         var form = new FormData();
-        form.append("email", (_this$user = this.user) === null || _this$user === void 0 ? void 0 : _this$user.email);
+        form.append("email", this.user.email);
         this.axios.post(endPoint, form).then(function (_ref) {
           var data = _ref.data;
           if (data !== null && data !== void 0 && data.success) {
@@ -3075,16 +3080,15 @@ __webpack_require__.r(__webpack_exports__);
             }, 1500);
           }
         })["catch"](function (err) {
-          var _err$response;
-          if (err !== null && err !== void 0 && (_err$response = err.response) !== null && _err$response !== void 0 && _err$response.data) {
+          console.log("kesini");
+          if (err.response.data) {
             _this.$swal({
               icon: "error",
               title: "Oops...",
               text: "Something went wrong!"
             });
             setTimeout(function () {
-              var _err$response2;
-              _this.validation = err === null || err === void 0 ? void 0 : (_err$response2 = err.response) === null || _err$response2 === void 0 ? void 0 : _err$response2.data;
+              _this.validation = err.response.data;
               _this.loadingForgot = false;
             }, 1500);
           }
@@ -3095,7 +3099,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     checkPasswordResetData: function checkPasswordResetData(email) {
       var _this2 = this;
-      var endPoint = "".concat(this.api_url, "/password-reset-data/").concat(email);
+      var endPoint = "".concat(this.app_env === "local" ? this.api_url : this.public_api, "/password-reset-data/").concat(email);
       try {
         this.axios.get(endPoint).then(function (_ref2) {
           var data = _ref2.data;
@@ -3366,9 +3370,11 @@ __webpack_require__.r(__webpack_exports__);
     var _window;
     return {
       context: (_window = window) === null || _window === void 0 ? void 0 : _window.context,
-      apiToken: "J5EzCAIV71em7uiCEruCxlgQKZOHmviU",
+      app_env: "local",
+      public_api: "https://api.store.dntourtravel.com/api/v1",
+      server_url_public: "https://api.store.dntourtravel.com",
       api_url: "http://localhost:8000/api/v1",
-      token_reset: this.$route.params.token_reset,
+      apiToken: "J5EzCAIV71em7uiCEruCxlgQKZOHmviU",
       loadingReset: null,
       loadingCheck: null,
       form: {},
@@ -3376,11 +3382,11 @@ __webpack_require__.r(__webpack_exports__);
       validation: [],
       data_reset: {},
       showing: false,
-      showingConfirm: false
+      showingConfirm: false,
+      token_reset: this.$route.params.token_reset
     };
   },
   mounted: function mounted() {
-    // console.log(this.token_reset);
     this.checkTokenResetPassword();
     if (this.token_reset) this.form.token = this.token_reset;
   },
@@ -3409,10 +3415,11 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
       try {
         this.loadingCheck = true;
-        var endPoint = "".concat(this.api_url, "/check-reset-token/").concat(this.token_reset);
+        var endPoint = "".concat(this.app_env === "local" ? this.api_url : this.public_api, "/check-reset-token/").concat(this.token_reset);
+        console.log(endPoint);
         this.axios.get(endPoint).then(function (_ref) {
           var data = _ref.data;
-          // console.log(data);
+          console.log(data);
           if (!(data !== null && data !== void 0 && data.valid)) {
             _this.$swal("Forbidden access", "That thing is still around?", "danger");
             _this.$router.replace("/");
@@ -3433,7 +3440,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
       try {
         this.loadingReset = true;
-        var endPoint = "".concat(this.api_url, "/reset");
+        var endPoint = "".concat(this.app_env === "local" ? this.api_url : this.public_api, "/reset");
         var request = {
           token: this.form.token,
           password: this.form.password,
@@ -3445,6 +3452,7 @@ __webpack_require__.r(__webpack_exports__);
         form.append("password_confirmation", this.form.password_confirmation);
         this.axios.post(endPoint, form).then(function (_ref2) {
           var data = _ref2.data;
+          console.log(data);
           if (data !== null && data !== void 0 && data.success) {
             _this2.$swal({
               position: "top-end",
@@ -3534,14 +3542,19 @@ __webpack_require__.r(__webpack_exports__);
     var _window;
     return {
       context: (_window = window) === null || _window === void 0 ? void 0 : _window.context,
-      token: this.$route.query.access_token,
+      app_env: "local",
+      public_api: "https://api.store.dntourtravel.com/api/v1",
+      server_url_public: "https://api.store.dntourtravel.com",
       server_url: "http://localhost:8000",
+      api_url: "http://localhost:8000/api/v1",
+      token: this.$route.query.access_token,
       user: {},
       google_id: ""
     };
   },
   mounted: function mounted() {
     this.checkUserLogin();
+    console.log(this.google_id);
   },
   methods: {
     profile: function profile(id) {
@@ -3552,26 +3565,30 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
       try {
         if (this.token) {
-          var endPoint = "".concat(this.server_url, "/api/user");
+          var endPoint = "".concat(this.app_env === "local" ? this.server_url : this.server_url_public, "/api/user");
           this.axios.defaults.headers.common.Authorization = "Bearer ".concat(this.token);
           this.axios.defaults.headers.common["Content-Type"] = "application/json";
           this.axios.defaults.headers.common["Accept"] = "application/json";
           this.axios.get(endPoint).then(function (_ref) {
-            var _data$data;
             var data = _ref.data;
-            if (data !== null && data !== void 0 && (_data$data = data.data) !== null && _data$data !== void 0 && _data$data.google_id) {
-              var _data$data2, _data$data3, _data$data4, _data$data5, _data$data6;
+            // console.log(data);
+            if (data.data.google_id) {
+              var _data$data, _data$data2, _data$data3, _data$data4, _data$data5;
               localStorage.setItem("token", JSON.stringify({
                 token: _this.token
               }));
               localStorage.setItem("user-roles", JSON.stringify({
-                name: data === null || data === void 0 ? void 0 : (_data$data2 = data.data) === null || _data$data2 === void 0 ? void 0 : _data$data2.name,
-                email: data === null || data === void 0 ? void 0 : (_data$data3 = data.data) === null || _data$data3 === void 0 ? void 0 : _data$data3.email,
-                roles: data === null || data === void 0 ? void 0 : (_data$data4 = data.data) === null || _data$data4 === void 0 ? void 0 : _data$data4.roles,
-                google_id: data === null || data === void 0 ? void 0 : (_data$data5 = data.data) === null || _data$data5 === void 0 ? void 0 : _data$data5.google_id
+                name: data === null || data === void 0 ? void 0 : (_data$data = data.data) === null || _data$data === void 0 ? void 0 : _data$data.name,
+                email: data === null || data === void 0 ? void 0 : (_data$data2 = data.data) === null || _data$data2 === void 0 ? void 0 : _data$data2.email,
+                roles: data === null || data === void 0 ? void 0 : (_data$data3 = data.data) === null || _data$data3 === void 0 ? void 0 : _data$data3.roles,
+                google_id: data === null || data === void 0 ? void 0 : (_data$data4 = data.data) === null || _data$data4 === void 0 ? void 0 : _data$data4.google_id
               }));
               _this.user = data === null || data === void 0 ? void 0 : data.data;
-              _this.google_id = data === null || data === void 0 ? void 0 : (_data$data6 = data.data) === null || _data$data6 === void 0 ? void 0 : _data$data6.google_id;
+              _this.google_id = data === null || data === void 0 ? void 0 : (_data$data5 = data.data) === null || _data$data5 === void 0 ? void 0 : _data$data5.google_id;
+              setTimeout(function () {
+                var _data$data6;
+                _this.$router.replace("/profile/".concat(data === null || data === void 0 ? void 0 : (_data$data6 = data.data) === null || _data$data6 === void 0 ? void 0 : _data$data6.google_id));
+              }, 5000);
             }
           })["catch"](function (err) {
             return console.log(err.message);
@@ -3645,6 +3662,35 @@ __webpack_require__.r(__webpack_exports__);
     var _window;
     return {
       context: (_window = window) === null || _window === void 0 ? void 0 : _window.context
+    };
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Layout/Footer.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Layout/Footer.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      year: new Date().getFullYear(),
+      privacy: "/privacy-policy"
     };
   }
 });
@@ -3990,6 +4036,9 @@ __webpack_require__.r(__webpack_exports__);
     var _window;
     return {
       context: (_window = window) === null || _window === void 0 ? void 0 : _window.context,
+      app_env: "local",
+      public_api: "https://api.store.dntourtravel.com/api/v1",
+      server_url_public: "https://api.store.dntourtravel.com",
       api_url: "http://localhost:8000/api/v1",
       server_url: "http://localhost:8000",
       form: {},
@@ -4007,6 +4056,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.isLogin();
+    console.log(this.server_url_public);
   },
   methods: {
     showPassword: function showPassword() {
@@ -4023,7 +4073,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
       try {
         var token = localStorage.getItem("token") ? JSON.parse(localStorage.getItem("token")) : null;
-        var endPoint = "".concat(this.server_url, "/api/user");
+        var endPoint = "".concat(this.app_env === "local" ? this.api_url : this.public_api, "/api/user");
         this.axios.defaults.headers.common.Authorization = "Bearer ".concat(token.token);
         this.axios.get(endPoint).then(function (_ref) {
           var _data$data, _data$data2;
@@ -4102,7 +4152,6 @@ __webpack_require__.r(__webpack_exports__);
           username: _this5.username,
           roles: roles
         }));
-        console.log(_this5.googleId);
         roles === "admin" ? _this5.$router.push("/dashboard/".concat(roles)) : _this5.$router.push("/profile/".concat(_this5.googleId ? _this5.googleId : _this5.username));
       }, 1500);
     },
@@ -4111,7 +4160,8 @@ __webpack_require__.r(__webpack_exports__);
       try {
         var _this$form, _this$form2;
         this.loginLoading = true;
-        var endPoint = "".concat(this.api_url, "/auth/login");
+        var endPoint = "".concat(this.app_env === "local" ? this.api_url : this.public_api, "/auth/login");
+        console.log(endPoint);
         this.axios.post(endPoint, {
           email: (_this$form = this.form) === null || _this$form === void 0 ? void 0 : _this$form.email,
           password: (_this$form2 = this.form) === null || _this$form2 === void 0 ? void 0 : _this$form2.password,
@@ -4236,6 +4286,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../helpers */ "./resources/js/helpers.js");
+/* provided dependency */ var process = __webpack_require__(/*! process/browser.js */ "./node_modules/process/browser.js");
 //
 //
 //
@@ -4281,7 +4332,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       token: (0,_helpers__WEBPACK_IMPORTED_MODULE_0__.getToken)("token"),
       role: this.$route.params.role,
-      server_url: "http://localhost:8000",
+      server_url: process.env.MIX_SERVER_URL,
       api_url: "http://localhost:8000/api/v1",
       user: {},
       userId: null
@@ -4719,6 +4770,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
+      app_env: "local",
+      public_api: "https://api.store.dntourtravel.com/api/v1",
+      server_url_public: "https://api.store.dntourtravel.com",
       token: (0,_helpers__WEBPACK_IMPORTED_MODULE_0__.getToken)("token"),
       role: this.$route.params.role,
       server_url: "http://localhost:8000",
@@ -4736,20 +4790,18 @@ __webpack_require__.r(__webpack_exports__);
     userData: function userData() {
       var _this = this;
       try {
-        // console.log(this.token);
         if (this.token.token) {
-          var endPoint = "".concat(this.server_url, "/api/user");
+          var endPoint = "".concat(this.app_env === "local" ? this.server_url : this.server_url_public, "/api/user");
           this.axios.defaults.headers.common.Authorization = "Bearer ".concat(this.token.token);
           this.axios.get(endPoint).then(function (_ref) {
-            var _data$data2, _data$data3;
+            var _data$data, _data$data2;
             var data = _ref.data;
-            if (data !== null && data !== void 0 && data.data.google_id) {
-              var _data$data;
-              _this.googleId = data === null || data === void 0 ? void 0 : (_data$data = data.data) === null || _data$data === void 0 ? void 0 : _data$data.google_id;
+            if (data.data.google_id) {
+              _this.googleId = data.data.google_id;
             }
             _this.user = data === null || data === void 0 ? void 0 : data.data;
-            _this.username = data === null || data === void 0 ? void 0 : (_data$data2 = data.data) === null || _data$data2 === void 0 ? void 0 : _data$data2.profiles[0].username;
-            _this.userId = data === null || data === void 0 ? void 0 : (_data$data3 = data.data) === null || _data$data3 === void 0 ? void 0 : _data$data3.id;
+            _this.username = data === null || data === void 0 ? void 0 : (_data$data = data.data) === null || _data$data === void 0 ? void 0 : _data$data.profiles[0].username;
+            _this.userId = data === null || data === void 0 ? void 0 : (_data$data2 = data.data) === null || _data$data2 === void 0 ? void 0 : _data$data2.id;
           })["catch"](function (err) {
             return console.log(err.message);
           });
@@ -4773,13 +4825,13 @@ __webpack_require__.r(__webpack_exports__);
         }).then(function (result) {
           if (result.isConfirmed) {
             var _this2$token;
-            var endPoint = "".concat(_this2.api_url, "/auth/logout");
+            var endPoint = "".concat(_this2.app_env === "local" ? _this2.api_url : _this2.public_api, "/auth/logout");
             _this2.axios.defaults.headers.common.Authorization = "Bearer ".concat((_this2$token = _this2.token) === null || _this2$token === void 0 ? void 0 : _this2$token.token);
             _this2.axios.post(endPoint).then(function (_ref2) {
               var data = _ref2.data;
               if (data.success) {
-                var _data$data4;
-                _this2.$swal("Your exit from ".concat(data === null || data === void 0 ? void 0 : (_data$data4 = data.data) === null || _data$data4 === void 0 ? void 0 : _data$data4.name, " profile !"), data === null || data === void 0 ? void 0 : data.message, "success");
+                var _data$data3;
+                _this2.$swal("Your exit from ".concat(data === null || data === void 0 ? void 0 : (_data$data3 = data.data) === null || _data$data3 === void 0 ? void 0 : _data$data3.name, " profile !"), data === null || data === void 0 ? void 0 : data.message, "success");
                 localStorage.removeItem("token");
                 localStorage.removeItem("user-roles");
                 _this2.$router.replace("/");
@@ -30481,15 +30533,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _Footer_vue_vue_type_template_id_78547fe5___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Footer.vue?vue&type=template&id=78547fe5& */ "./resources/js/components/Layout/Footer.vue?vue&type=template&id=78547fe5&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _Footer_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Footer.vue?vue&type=script&lang=js& */ "./resources/js/components/Layout/Footer.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
-var script = {}
+
+
 
 
 /* normalize component */
 ;
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
-  script,
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Footer_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _Footer_vue_vue_type_template_id_78547fe5___WEBPACK_IMPORTED_MODULE_0__.render,
   _Footer_vue_vue_type_template_id_78547fe5___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
@@ -31028,6 +31082,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Hero_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Hero.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Home/Hero.vue?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Hero_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Layout/Footer.vue?vue&type=script&lang=js&":
+/*!****************************************************************************!*\
+  !*** ./resources/js/components/Layout/Footer.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Footer_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Footer.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Layout/Footer.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Footer_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -32835,9 +32905,17 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("footer", { staticClass: "mt-auto top-0 w-full text-center" }, [
-    _vm._v("\n    © D & N Tour Travel\n"),
-  ])
+  return _c(
+    "footer",
+    {
+      staticClass: "mt-auto top-0 w-full text-center mb-6 hover:text-blue-700",
+    },
+    [
+      _c("a", { attrs: { href: _vm.privacy } }, [
+        _vm._v(" © D & N Tour Travel @ " + _vm._s(_vm.year) + " "),
+      ]),
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -33597,13 +33675,13 @@ var render = function () {
           [
             _c("img", {
               staticClass:
-                "w-screen h-96 md:h-96 object-cover md:w-48 rounded-t-lg md:rounded-none md:rounded-l-lg",
+                "w-screen h-96 md:h-96 object-cover md:w-48 mt-6 md:mt-0 rounded-t-lg md:rounded-none md:rounded-l-lg",
               attrs: { src: _vm.context.privacy.second_vector, alt: "" },
             }),
             _vm._v(" "),
             _c(
               "div",
-              { staticClass: "p-6 flex flex-col justify-start w-full" },
+              { staticClass: "p-6 flex flex-col justify-start w-80 md:w-full" },
               [
                 _c("h1", { staticClass: "font-bold text-3xl font-serif" }, [
                   _vm._v(
@@ -33739,7 +33817,7 @@ var render = function () {
                         href: "https://policies.google.com/technologies/ads",
                       },
                     },
-                    [_vm._v("https://policies.google.com/technologies/ads")]
+                    [_vm._v("Google Technologies Ads")]
                   ),
                 ]),
                 _vm._v(" "),
@@ -33775,7 +33853,7 @@ var render = function () {
                             href: "https://policies.google.com/technologies/ads",
                           },
                         },
-                        [_vm._v("https://policies.google.com/technologies/ads")]
+                        [_vm._v("Google Technologies Ads")]
                       ),
                     ]),
                   ]),

@@ -129,17 +129,20 @@ class RedirectProviderController extends Controller
     public function handleProviderCallback($provider)
     {
 
-        if (!in_array($provider, self::PROVIDERS)) {
-            return $this->sendError(self::NOT_FOUND);
-        }
 
         try {
+            if (!in_array($provider, self::PROVIDERS)) {
+                return $this->sendError(self::NOT_FOUND);
+            }
+
             $providerUser = Socialite::driver($provider)->stateless()->user();
+
 
             if ($providerUser) {
 
                 $user = User::where('provider_name', $provider)
                     ->where('google_id', $providerUser->getId())
+                    ->where('email', $providerUser->getEmail())
                     ->first();
 
                 $big_data_key = env('API_KEY_BIG_DATA');
@@ -199,9 +202,6 @@ class RedirectProviderController extends Controller
                     $user->save();
 
                     $user_profile_data = User::with('profiles')->findOrFail($user->id);
-
-                    // var_dump($user_profile_data);
-                    // die;
 
                     $profile = Profile::find($user_profile_data['profiles'][0]['id'])->first();
 

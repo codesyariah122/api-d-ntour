@@ -47,65 +47,67 @@ class ForgotPasswordController extends Controller
     public function forgot(Request $request, $apiToken)
     {
         try {
-            $token = ApiKeys::whereToken($apiToken)->first();
 
-            if ($apiToken !== $token->token) {
+            $token = ApiKeys::whereToken($apiToken)->first();
+            if ($token !== NULL) {
+                $validator = Validator::make($request->all(), [
+                    'email' => 'required|email'
+                ]);
+
+                if ($validator->fails()) {
+                    return response()->json($validator->errors(), 400);
+                }
+
+
+
+                $email = $request->email;
+                $checkUser = User::whereEmail($email)->with('profiles')->first();
+
+                if (!$checkUser) {
+                    return response()->json([
+                        'message' => 'Ooops sory your account is not register!'
+                    ]);
+                }
+
+                $big_data_key = env('API_KEY_BIG_DATA');
+                $ip_address = $this->helper->getIpAddr();
+                $get_ipaddr = $ip_address === '127.0.0.1' ? '103.139.10.39' : $ip_address;
+
+                $userDetect = Http::get("https://api.bigdatacloud.net/data/timezone-by-ip?ip={$get_ipaddr}&key={$big_data_key}")->json();
+
+                $current = Carbon::now()->setTimezone($userDetect['ianaTimeId']);
+
+                $token = Str::random(32);
+                DB::table('password_resets')->insert([
+                    'email' => $email,
+                    'token' => $token,
+                    'created_at' => $current
+                ]);
+
+                $details = [
+                    'title' => 'Reset password D & N Tour Travel',
+                    'url' => 'https://dntourtravel.com',
+                    'id' => $checkUser->id,
+                    'username' => $checkUser->profiles[0]->username,
+                    'email' => $checkUser->email,
+                    'token' => $token
+                ];
+                Mail::to($email)->send(new ForgotPasswordEmail($details));
+
+                $tokenReset = PasswordReset::whereEmail($email)->first();
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Check your inbox email and follow the link to reset your password',
+                    'data' => $checkUser,
+                    'token_reset' => $tokenReset->token
+                ]);
+            } else {
                 return response()->json([
                     'error' => true,
                     'message' => 'Oops sory your token is not valid !'
                 ]);
             }
-
-            $validator = Validator::make($request->all(), [
-                'email' => 'required|email'
-            ]);
-
-            if ($validator->fails()) {
-                return response()->json($validator->errors(), 400);
-            }
-
-            $email = $request->email;
-            $checkUser = User::whereEmail($email)->with('profiles')->first();
-
-            if (!$checkUser) {
-                return response()->json([
-                    'message' => 'Ooops sory your account is not register!'
-                ]);
-            }
-
-            $big_data_key = env('API_KEY_BIG_DATA');
-            $ip_address = $this->helper->getIpAddr();
-            $get_ipaddr = $ip_address === '127.0.0.1' ? '103.139.10.39' : $ip_address;
-
-            $userDetect = Http::get("https://api.bigdatacloud.net/data/timezone-by-ip?ip={$get_ipaddr}&key={$big_data_key}")->json();
-
-            $current = Carbon::now()->setTimezone($userDetect['ianaTimeId']);
-
-            $token = Str::random(32);
-            DB::table('password_resets')->insert([
-                'email' => $email,
-                'token' => $token,
-                'created_at' => $current
-            ]);
-
-            $details = [
-                'title' => 'Reset password D & N Tour Travel',
-                'url' => 'https://dntourtravel.com',
-                'id' => $checkUser->id,
-                'username' => $checkUser->profiles[0]->username,
-                'email' => $checkUser->email,
-                'token' => $token
-            ];
-            Mail::to($email)->send(new ForgotPasswordEmail($details));
-
-            $tokenReset = PasswordReset::whereEmail($email)->first();
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Check your inbox email and follow the link to reset your password',
-                'data' => $checkUser,
-                'token_reset' => $tokenReset->token
-            ]);
         } catch (\Throwable $th) {
             throw $th;
         }

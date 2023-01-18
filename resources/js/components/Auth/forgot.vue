@@ -156,6 +156,9 @@ export default {
     data() {
         return {
             context: window?.context,
+            app_env: process.env.MIX_APP_ENV,
+            public_api: process.env.MIX_API_PUBLIC,
+            server_url_public: process.env.MIX_APP_PUBLIC,
             apiToken: process.env.MIX_API_TOKEN,
             api_url: process.env.MIX_API_URL,
             loadingForgot: null,
@@ -167,7 +170,9 @@ export default {
         };
     },
 
-    mounted() {},
+    mounted() {
+        console.log(this.app_env);
+    },
 
     methods: {
         emailDomain(email) {
@@ -183,9 +188,12 @@ export default {
             try {
                 this.validation = [];
                 this.loadingForgot = true;
-                const endPoint = `${this.api_url}/forgot/${this.apiToken}`;
+                const endPoint = `${
+                    this.app_env === "local" ? this.api_url : this.public_api
+                }/forgot/${this.apiToken}`;
+                console.log(endPoint);
                 const form = new FormData();
-                form.append("email", this.user?.email);
+                form.append("email", this.user.email);
                 this.axios
                     .post(endPoint, form)
                     .then(({ data }) => {
@@ -223,14 +231,15 @@ export default {
                         }
                     })
                     .catch((err) => {
-                        if (err?.response?.data) {
+                        console.log("kesini");
+                        if (err.response.data) {
                             this.$swal({
                                 icon: "error",
                                 title: "Oops...",
                                 text: "Something went wrong!",
                             });
                             setTimeout(() => {
-                                this.validation = err?.response?.data;
+                                this.validation = err.response.data;
                                 this.loadingForgot = false;
                             }, 1500);
                         }
@@ -241,7 +250,9 @@ export default {
         },
 
         checkPasswordResetData(email) {
-            const endPoint = `${this.api_url}/password-reset-data/${email}`;
+            const endPoint = `${
+                this.app_env === "local" ? this.api_url : this.public_api
+            }/password-reset-data/${email}`;
             try {
                 this.axios
                     .get(endPoint)

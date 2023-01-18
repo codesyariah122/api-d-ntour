@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\UserActivation;
-use App\Models\Profile;
 use App\Models\User;
 
 class UserActivationTokenController extends Controller

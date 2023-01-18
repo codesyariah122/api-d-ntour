@@ -44,9 +44,12 @@ import { getToken } from "../../helpers";
 export default {
     data() {
         return {
+            app_env: process.env.MIX_APP_ENV,
+            public_api: process.env.MIX_API_PUBLIC,
+            server_url_public: process.env.MIX_APP_PUBLIC,
             token: getToken("token"),
             role: this.$route.params.role,
-            server_url: process.env.MIX_SERVER_URL,
+            server_url: process.env.MIX_APP_URL,
             api_url: process.env.MIX_API_URL,
             user: {},
             username: "",
@@ -62,15 +65,18 @@ export default {
     methods: {
         userData() {
             try {
-                // console.log(this.token);
                 if (this.token.token) {
-                    const endPoint = `${this.server_url}/api/user`;
+                    const endPoint = `${
+                        this.app_env === "local"
+                            ? this.server_url
+                            : this.server_url_public
+                    }/api/user`;
                     this.axios.defaults.headers.common.Authorization = `Bearer ${this.token.token}`;
                     this.axios
                         .get(endPoint)
                         .then(({ data }) => {
-                            if (data?.data.google_id) {
-                                this.googleId = data?.data?.google_id;
+                            if (data.data.google_id) {
+                                this.googleId = data.data.google_id;
                             }
                             this.user = data?.data;
                             this.username = data?.data?.profiles[0].username;
@@ -94,7 +100,11 @@ export default {
                     confirmButtonText: "Yes, logout!",
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        const endPoint = `${this.api_url}/auth/logout`;
+                        const endPoint = `${
+                            this.app_env === "local"
+                                ? this.api_url
+                                : this.public_api
+                        }/auth/logout`;
                         this.axios.defaults.headers.common.Authorization = `Bearer ${this.token?.token}`;
                         this.axios
                             .post(endPoint)

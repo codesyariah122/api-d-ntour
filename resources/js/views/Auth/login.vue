@@ -150,8 +150,11 @@ export default {
     data() {
         return {
             context: window?.context,
+            app_env: process.env.MIX_APP_ENV,
+            public_api: process.env.MIX_API_PUBLIC,
+            server_url_public: process.env.MIX_APP_PUBLIC,
             api_url: process.env.MIX_API_URL,
-            server_url: process.env.MIX_SERVER_URL,
+            server_url: process.env.MIX_APP_URL,
             form: {},
             remember_me: false,
             loginLoading: null,
@@ -168,6 +171,7 @@ export default {
 
     mounted() {
         this.isLogin();
+        console.log(this.server_url_public);
     },
 
     methods: {
@@ -186,7 +190,9 @@ export default {
                 const token = localStorage.getItem("token")
                     ? JSON.parse(localStorage.getItem("token"))
                     : null;
-                const endPoint = `${this.server_url}/api/user`;
+                const endPoint = `${
+                    this.app_env === "local" ? this.api_url : this.public_api
+                }/api/user`;
                 this.axios.defaults.headers.common.Authorization = `Bearer ${token.token}`;
                 this.axios
                     .get(endPoint)
@@ -272,7 +278,6 @@ export default {
                         roles: roles,
                     })
                 );
-                console.log(this.googleId);
                 roles === "admin"
                     ? this.$router.push(`/dashboard/${roles}`)
                     : this.$router.push(
@@ -285,7 +290,10 @@ export default {
         login() {
             try {
                 this.loginLoading = true;
-                const endPoint = `${this.api_url}/auth/login`;
+                const endPoint = `${
+                    this.app_env === "local" ? this.api_url : this.public_api
+                }/auth/login`;
+                console.log(endPoint);
                 this.axios
                     .post(endPoint, {
                         email: this.form?.email,

@@ -25,6 +25,7 @@ class HomePageController extends Controller
                 'og_image_height' => '590'
             ],
             'brand' => env('APP_BRAND'),
+            'env' => env('MIX_APP_ENV'),
             'gif' => asset('gif/loader.gif'),
             'hero' => [
                 'logo' => asset('images/web-asset/logo/D_N-Logo.png'),

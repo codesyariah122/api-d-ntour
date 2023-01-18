@@ -5,11 +5,11 @@
                 class="flex flex-col md:flex-row max-w-screen rounded-lg bg-white shadow-lg"
             >
                 <img
-                    class="w-screen h-96 md:h-96 object-cover md:w-48 rounded-t-lg md:rounded-none md:rounded-l-lg"
+                    class="w-screen h-96 md:h-96 object-cover md:w-48 mt-6 md:mt-0 rounded-t-lg md:rounded-none md:rounded-l-lg"
                     :src="context.privacy.second_vector"
                     alt=""
                 />
-                <div class="p-6 flex flex-col justify-start w-full">
+                <div class="p-6 flex flex-col justify-start w-80 md:w-full">
                     <h1 class="font-bold text-3xl font-serif">
                         Privacy Policy for D &amp; N Tour Travel
                     </h1>
@@ -109,7 +109,7 @@
                         <a
                             class="text-blue-600 hover:text-blue-700 font-semibold underline box-decoration-slice"
                             href="https://policies.google.com/technologies/ads"
-                            >https://policies.google.com/technologies/ads</a
+                            >Google Technologies Ads</a
                         >
                     </p>
 
@@ -132,7 +132,7 @@
                                 <a
                                     class="text-blue-600 hover:text-blue-700 font-semibold underline box-decoration-slice"
                                     href="https://policies.google.com/technologies/ads"
-                                    >https://policies.google.com/technologies/ads</a
+                                    >Google Technologies Ads</a
                                 >
                             </p>
                         </li>
