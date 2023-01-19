@@ -17,7 +17,7 @@ return [
 
     'paths' => ['api/*', 'sanctum/csrf-cookie'],
 
-    'allowed_methods' => ['*'],
+    'allowed_methods' => ['http://localhost:8000', 'http://localhost:3000', 'https://dntourtravel.com', 'https://api.store.dntourtravel.com'],
 
     'allowed_origins' => ['*'],
 

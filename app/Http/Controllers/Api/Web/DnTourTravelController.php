@@ -6,13 +6,15 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Http\Request;
 use App\Helpers\UserHelpers;
 use App\Models\ApiKeys;
 use App\Models\Contact;
 use App\Mail\ContactEmail;
 use App\Mail\ReplyContactEmail;
-use Illuminate\Support\Facades\URL;
+use App\Models\Shelter;
+use App\Models\District;
 
 class DnTourTravelController extends Controller
 {
@@ -255,6 +257,87 @@ class DnTourTravelController extends Controller
                 'message' => 'List Villages',
                 'data' => $village
             ]);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    public function shelter_lists(Request $request)
+    {
+        try {
+            $headersDN = $request->header('X-Header-DNTour');
+            $contentType = $request->header('Content-Type');
+            $accept = $request->header('Accept');
+
+            if ($headersDN === NULL || $contentType === NULL || $accept === NULL) {
+                return response()->json([
+                    'error' => true,
+                    'message' => 'Error headers not set !'
+                ]);
+            }
+
+            $apiKey = ApiKeys::whereToken($headersDN)->first();
+
+            if ($apiKey) {
+                $district_name = $request->district_name;
+                // var_dump($district_name);
+                // die;
+                if ($district_name) {
+                    $shelterData = Shelter::whereHas('districts', function ($query) use ($district_name) {
+                        $query->where('district_name', 'like', '%' . $district_name . '%');
+                    })->with('districts')->get();
+                } else {
+                    $shelterData = Shelter::with('districts')->paginate(3);
+                }
+
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Shelter list data',
+                    'data' => $shelterData
+                ]);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Error token is not valid!'
+                ]);
+            }
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    public function shelterByChange(Request $request, $id)
+    {
+        try {
+            $headersDN = $request->header('X-Header-DNTour');
+            $contentType = $request->header('Content-Type');
+            $accept = $request->header('Accept');
+
+            if ($headersDN === NULL || $contentType === NULL || $accept === NULL) {
+                return response()->json([
+                    'error' => true,
+                    'message' => 'Error headers not set !'
+                ]);
+            }
+
+            $apiKey = ApiKeys::whereToken($headersDN)->first();
+
+            if ($apiKey) {
+                $shelterData = Shelter::whereNotIn('id', [$id])
+                    ->with('districts')
+                    ->get();
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Shelter list data',
+                    'data' => $shelterData
+                ]);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Error token is not valid!'
+                ]);
+            }
         } catch (\Throwable $th) {
             throw $th;
         }

@@ -19,6 +19,8 @@ Route::prefix('v1')->group(function () {
     // Web fiture handler
     Route::post('/sending-message/{apiToken}', [DnTourTravelController::class, 'sending_message']);
     Route::post('/push-notif', [PushNotificationController::class, 'push_notification']);
+    Route::get('/shelter', [DnTourTravelController::class, 'shelter_lists']);
+    Route::get('/shelter/change/{id}', [DnTourTravelController::class, 'shelterByChange']);
 
     // Forgot password route api
     Route::post('/forgot/{apiToken}', [ForgotPasswordController::class, 'forgot']);
@@ -42,10 +44,6 @@ Route::middleware('auth:api')->prefix('v1/fitur')->group(function () {
     Route::resource('shelter', ShelterController::class);
     Route::resource('district', DistrictController::class);
 });
-
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
 
 // Authentication route
 Route::prefix('v1/auth')->group(function () {
