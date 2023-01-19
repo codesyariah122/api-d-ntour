@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 namespace App\Http\Controllers\Api\Auth;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Api\Web\DnTourTravelController;
 use App\Http\Controllers\Api\Fitur\ShelterController;
 use App\Http\Controllers\Api\Fitur\DistrictController;
