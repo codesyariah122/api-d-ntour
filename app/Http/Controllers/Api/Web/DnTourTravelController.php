@@ -268,6 +268,7 @@ class DnTourTravelController extends Controller
             $headersDN = $request->header('X-Header-DNTour');
             $contentType = $request->header('Content-Type');
             $accept = $request->header('Accept');
+            $district_name = $request->district_name;
 
             if ($headersDN === NULL || $contentType === NULL || $accept === NULL) {
                 return response()->json([
@@ -279,12 +280,10 @@ class DnTourTravelController extends Controller
             $apiKey = ApiKeys::whereToken($headersDN)->first();
 
             if ($apiKey) {
-                $district_name = $request->district_name;
-                // var_dump($district_name);
-                // die;
+
                 if ($district_name) {
                     $shelterData = Shelter::whereHas('districts', function ($query) use ($district_name) {
-                        $query->where('district_name', 'like', '%' . $district_name . '%');
+                        $query->where('district_name', 'LIKE', '%' . $district_name . '%');
                     })->with('districts')->get();
                 } else {
                     $shelterData = Shelter::with('districts')->paginate(3);
@@ -312,6 +311,8 @@ class DnTourTravelController extends Controller
             $headersDN = $request->header('X-Header-DNTour');
             $contentType = $request->header('Content-Type');
             $accept = $request->header('Accept');
+            $district_name = $request->district_name;
+
 
             if ($headersDN === NULL || $contentType === NULL || $accept === NULL) {
                 return response()->json([
@@ -323,9 +324,18 @@ class DnTourTravelController extends Controller
             $apiKey = ApiKeys::whereToken($headersDN)->first();
 
             if ($apiKey) {
-                $shelterData = Shelter::whereNotIn('id', [$id])
-                    ->with('districts')
-                    ->get();
+                if ($district_name) {
+                    $shelterData = Shelter::whereNotIn('id', [$id])
+                        ->whereHas('districts', function ($query) use ($district_name) {
+                            $query->where('district_name', 'LIKE', '%' . $district_name . '%');
+                        })
+                        ->with('districts')->get();
+                } else {
+                    $shelterData = Shelter::whereNotIn('id', [$id])
+                        ->with('districts')
+                        ->get();
+                }
+
                 return response()->json([
                     'success' => true,
                     'message' => 'Shelter list data',
