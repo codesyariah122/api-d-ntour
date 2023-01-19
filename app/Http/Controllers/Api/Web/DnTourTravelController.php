@@ -290,7 +290,6 @@ class DnTourTravelController extends Controller
                     $shelterData = Shelter::with('districts')->paginate(3);
                 }
 
-
                 return response()->json([
                     'success' => true,
                     'message' => 'Shelter list data',
