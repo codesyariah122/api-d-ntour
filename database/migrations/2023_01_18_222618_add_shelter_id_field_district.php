@@ -14,7 +14,8 @@ class AddShelterIdFieldDistrict extends Migration
     public function up()
     {
         Schema::table('districts', function (Blueprint $table) {
-            $table->unsignedBigInteger('shelter_id')->after('district_name')->nullable();
+            $table->string('parent')->after('text');
+            $table->unsignedBigInteger('shelter_id')->after('text')->nullable();
             $table->foreign('shelter_id')->references('id')->on('shelters')->onDelete('cascade')->onUpdate('cascade');
         });
     }
@@ -27,6 +28,7 @@ class AddShelterIdFieldDistrict extends Migration
     public function down()
     {
         Schema::table('districts', function (Blueprint $table) {
+            $table->dropColumn('parent');
             $table->dropColumn('shelter_id');
         });
     }

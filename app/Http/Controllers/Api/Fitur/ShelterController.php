@@ -53,7 +53,7 @@ class ShelterController extends Controller
                 return response()->json($validator->errors(), 400);
             }
 
-            $shelters = Shelter::whereCity($request->city)->first();
+            $shelters = Shelter::whereText($request->city)->first();
 
             // var_dump($shelters);
             if ($shelters) {
@@ -65,12 +65,12 @@ class ShelterController extends Controller
 
             $city = $request->city;
             $shelter = new Shelter;
-            $shelter->city = ucfirst($city);
+            $shelter->text = ucfirst($city);
             $shelter->save();
 
             return response()->json([
                 'success' => true,
-                'message' => 'Adding new shelter ' . $shelter->city
+                'message' => 'Adding new shelter ' . $shelter->text
             ]);
         } catch (\Throwable $th) {
             throw $th;

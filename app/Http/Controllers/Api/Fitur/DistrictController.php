@@ -57,7 +57,7 @@ class DistrictController extends Controller
                 ]);
             }
 
-            $districts = District::whereDistrictName($request->district_name)->first();
+            $districts = District::whereText($request->district_name)->first();
 
             // var_dump($Districts);
             if ($districts) {
@@ -69,15 +69,17 @@ class DistrictController extends Controller
 
             $district_name = $request->district_name;
             $district = new District;
-            $district->district_name = ucfirst($district_name);
+            $district->text = ucfirst($district_name);
             $district->shelter_id = $request->shelter_id;
+            $district->parent = $shelter->text;
             $district->save();
             // $district_id = $district->id;
             // $shelter->districts('post')->sync($district_id);
 
             return response()->json([
                 'success' => true,
-                'message' => 'Adding new District ' . $district->district_name
+                'message' => 'Adding new District ' . $district->text,
+                'data' => $district
             ]);
         } catch (\Throwable $th) {
             throw $th;
