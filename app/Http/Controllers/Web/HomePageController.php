@@ -26,6 +26,7 @@ class HomePageController extends Controller
             ],
             'brand' => env('APP_BRAND'),
             'env' => env('MIX_APP_ENV'),
+            'app_token' => env('MIX_API_TOKEN'),
             'gif' => asset('gif/loader.gif'),
             'hero' => [
                 'logo' => asset('images/web-asset/logo/D_N-Logo.png'),

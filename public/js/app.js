@@ -3020,7 +3020,7 @@ __webpack_require__.r(__webpack_exports__);
       app_env: "local",
       public_api: "https://api.store.dntourtravel.com/api/v1",
       server_url_public: "https://api.store.dntourtravel.com",
-      apiToken: "Bl67KKROnmRE4qMOF4woNujchBdkXJD6",
+      apiToken: "ALXk21woFc464xxMEjfoYGuoW4XEWZZf",
       api_url: "http://localhost:8000/api/v1",
       loadingForgot: null,
       user: {},
@@ -3374,7 +3374,7 @@ __webpack_require__.r(__webpack_exports__);
       public_api: "https://api.store.dntourtravel.com/api/v1",
       server_url_public: "https://api.store.dntourtravel.com",
       api_url: "http://localhost:8000/api/v1",
-      apiToken: "Bl67KKROnmRE4qMOF4woNujchBdkXJD6",
+      apiToken: "ALXk21woFc464xxMEjfoYGuoW4XEWZZf",
       loadingReset: null,
       loadingCheck: null,
       form: {},
@@ -4049,7 +4049,7 @@ __webpack_require__.r(__webpack_exports__);
       userName: "",
       googleId: "",
       roles: "",
-      apiToken: "Bl67KKROnmRE4qMOF4woNujchBdkXJD6",
+      apiToken: "ALXk21woFc464xxMEjfoYGuoW4XEWZZf",
       showing: false,
       validation: []
     };
@@ -4442,6 +4442,36 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     DefaultLayout: _layouts_DefaultLayout__WEBPACK_IMPORTED_MODULE_0__["default"],
     Hero: _components_Home_Hero__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  data: function data() {
+    return {
+      app_env: "local",
+      server_url: "http://localhost:8000",
+      api_url: "http://localhost:8000/api/v1",
+      public_api: "https://api.store.dntourtravel.com/api/v1",
+      server_url_public: "https://api.store.dntourtravel.com",
+      shelters: []
+    };
+  },
+  mounted: function mounted() {
+    this.getShelterData();
+  },
+  methods: {
+    getShelterData: function getShelterData() {
+      var endPoint = "".concat(this.app_env === "local" ? this.api_url : this.public_api, "/shelter");
+      var config = {
+        headers: {
+          Accept: "application/json",
+          "X-Header-DNTour": "ALXk21woFc464xxMEjfoYGuoW4XEWZZf"
+        }
+      };
+      this.axios.get(endPoint, config).then(function (_ref) {
+        var data = _ref.data;
+        console.log(data);
+      })["catch"](function (err) {
+        return console.log(err);
+      });
+    }
   }
 });
 

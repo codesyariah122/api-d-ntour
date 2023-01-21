@@ -266,11 +266,10 @@ class DnTourTravelController extends Controller
     {
         try {
             $headersDN = $request->header('X-Header-DNTour');
-            $contentType = $request->header('Content-Type');
             $accept = $request->header('Accept');
             $district_name = $request->district_name;
 
-            if ($headersDN === NULL || $contentType === NULL || $accept === NULL) {
+            if ($headersDN === NULL || $accept === NULL) {
                 return response()->json([
                     'error' => true,
                     'message' => 'Error headers not set !'
