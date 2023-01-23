@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Api;
 
 namespace App\Http\Controllers\Api\Auth;
 
+
 use App\Http\Controllers\Api\Web\DnTourTravelController;
 use App\Http\Controllers\Api\Fitur\ShelterController;
 use App\Http\Controllers\Api\Fitur\DistrictController;
+use App\Http\Controllers\Api\Products\CategoryProductController;
+use App\Http\Controllers\Api\Products\ProductController;
 use App\Http\Controllers\Api\Web\PushNotificationController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +23,7 @@ Route::prefix('v1')->group(function () {
     Route::post('/push-notif', [PushNotificationController::class, 'push_notification']);
     Route::get('/shelter', [DnTourTravelController::class, 'shelter_lists']);
     Route::get('/shelter/change/{id}', [DnTourTravelController::class, 'shelterByChange']);
+    Route::get('/products', [DnTourTravelController::class, 'products']);
 
     // Forgot password route api
     Route::post('/forgot/{apiToken}', [ForgotPasswordController::class, 'forgot']);
@@ -42,6 +46,8 @@ Route::middleware('auth:api')->prefix('v1/fitur')->group(function () {
     Route::get('/user-login', [LoginController::class, 'userIsLogin']);
     Route::resource('shelter', ShelterController::class);
     Route::resource('district', DistrictController::class);
+    Route::resource('categories', CategoryProductController::class);
+    Route::resource('products', ProductController::class);
 });
 
 // Authentication route

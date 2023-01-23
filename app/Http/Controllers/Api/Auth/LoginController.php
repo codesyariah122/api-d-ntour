@@ -95,12 +95,16 @@ class LoginController extends Controller
                         $user_login = User::findOrFail($user->id);
                         $user_login->is_login = 1;
 
-                        if ($request->remember_me) {
-                            $user_login->expires_at = Carbon::now()->addRealDays(1)->setTimezone($userDetect['ianaTimeId']);
+                        if ($request->remember_me !== NULL) {
+                            // echo "Kesini bro";
+                            // die;
+                            $user_login->expires_at = Carbon::now()->addRealDays(30);
+                            $user_login->remember_token = Str::random(32);
                         }
-                        $user_login->expires_at = Carbon::now()->addRealMinutes(60)->setTimezone($userDetect['ianaTimeId']);
+
+                        // $user_login->expires_at = Carbon::today()->addRealMinutes(60)->setTimezone($userDetect['ianaTimeId']);
+                        $user_login->expires_at = Carbon::now()->addRealMinutes(60);
                         $user_login->last_login = $current;
-                        $user_login->remember_token = Str::random(32);
                         $user_login->save();
                         $user_id = $user_login->id;
                         $logins = new Login;

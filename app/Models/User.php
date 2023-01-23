@@ -56,4 +56,8 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Models\Login');
     }
+    public function products()
+    {
+        return $this->belongsToMany('App\Models\Product');
+    }
 }

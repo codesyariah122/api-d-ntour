@@ -14,7 +14,7 @@ use App\Models\Contact;
 use App\Mail\ContactEmail;
 use App\Mail\ReplyContactEmail;
 use App\Models\Shelter;
-use App\Models\District;
+use App\Models\ProductCategory;
 
 class DnTourTravelController extends Controller
 {
@@ -285,7 +285,7 @@ class DnTourTravelController extends Controller
                         $query->where('district_name', 'LIKE', '%' . $district_name . '%');
                     })->with('districts')->get();
                 } else {
-                    $shelterData = Shelter::with('districts')->paginate(3);
+                    $shelterData = Shelter::with('districts')->get();
                 }
 
                 return response()->json([
@@ -308,12 +308,11 @@ class DnTourTravelController extends Controller
     {
         try {
             $headersDN = $request->header('X-Header-DNTour');
-            $contentType = $request->header('Content-Type');
             $accept = $request->header('Accept');
             $district_name = $request->district_name;
 
 
-            if ($headersDN === NULL || $contentType === NULL || $accept === NULL) {
+            if ($headersDN === NULL || $accept === NULL) {
                 return response()->json([
                     'error' => true,
                     'message' => 'Error headers not set !'
@@ -339,6 +338,42 @@ class DnTourTravelController extends Controller
                     'success' => true,
                     'message' => 'Shelter list data',
                     'data' => $shelterData
+                ]);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Error token is not valid!'
+                ]);
+            }
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    public function products(Request $request)
+    {
+        try {
+            $headersDN = $request->header('X-Header-DNTour');
+            $accept = $request->header('Accept');
+            $product_title = $request->product_title;
+
+
+            if ($headersDN === NULL || $accept === NULL) {
+                return response()->json([
+                    'error' => true,
+                    'message' => 'Error headers not set !'
+                ]);
+            }
+
+            $apiKey = ApiKeys::whereToken($headersDN)->first();
+
+            if ($apiKey) {
+                $products = ProductCategory::with('products')->get();
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Shelter list data',
+                    'data' => $products
                 ]);
             } else {
                 return response()->json([
